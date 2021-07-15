@@ -9938,6 +9938,11 @@ react-dev-utils@^10.2.1:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
+react-digital-clock@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-digital-clock/-/react-digital-clock-0.1.2.tgz#e7bd33a57aa0ff6d7ca7ddb4a30cd584ecb63db2"
+  integrity sha512-fVh245QptNMiPs/GplGBiwtcQIjv9vuf7chGfD5DL+XBp36UgcKfDUkSjdR44asGVMjXdIALYHP0JjEk9MxaGw==
+
 react-dom@^16.13.1, react-dom@^16.7.0:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
@@ -9998,6 +10003,11 @@ react-live-clock@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-live-clock/-/react-live-clock-5.2.0.tgz#964ea6c81edb44412161bcd291c23dbe154c0de4"
   integrity sha512-MHL+1twEIMNxmf/2HpzE/KQTfEubZlobWLjf+BrHBGLllhPxjc40V+ZR0Q6W10yb78XLlilZU1TPIQAJNwcT6w==
+
+react-moment@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-1.1.1.tgz#5fe9fb257039590c804e2b3aedfc3ceb0a6ffb16"
+  integrity sha512-WjwvxBSnmLMRcU33do0KixDB+9vP3e84eCse+rd+HNklAMNWyRgZTDEQlay/qK6lcXFPRuEIASJTpEt6pyK7Ww==
 
 react-refresh@0.8.3:
   version "0.8.3"
