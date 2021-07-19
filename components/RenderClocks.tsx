@@ -43,7 +43,6 @@ export default function RenderClocks({ arr, options }) {
             timezone={country.zoneName}
             onChange={() => update()}
           />
-          hi
         </Box>
       </Flex>
     );
