@@ -27,7 +27,7 @@ export default function RenderClocks({ arr, options }) {
     const datetime = dayjs().tz(country.zoneName);
 
     return (
-      <Flex m="0 2%" key={i} direction="column" alignItems="center">
+      <Flex m="0 3%" key={i} direction="column" alignItems="center">
         <Heading mb="5">{country.countryName}</Heading>
         <AnalogClock
           {...options}
@@ -39,17 +39,11 @@ export default function RenderClocks({ arr, options }) {
         <Box fontSize="175%">
           <Clock
             ticking={true}
-            // date={country.time}
             format={"h:mm:ss a"}
             timezone={country.zoneName}
             onChange={() => update()}
-            // timezone=""
-            // interval={updateClock}
-            // format={"10:14:23"}
-            // date={setInterval(() => {
-            //   return `${country.time}`;
-            // }, 1000)}
           />
+          hi
         </Box>
       </Flex>
     );
