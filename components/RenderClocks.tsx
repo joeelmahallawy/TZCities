@@ -28,13 +28,18 @@ export default function RenderClocks({ arr, options }) {
 
     return (
       <Flex m="0 3%" key={i} direction="column" alignItems="center">
-        <Heading mb="5">{country.countryName}</Heading>
+        <Heading mb="5" fontSize="175%">
+          {country.city
+            ? `${country.city}, ${country.countryName}`
+            : "Your current time"}
+          {country.nextAbbreviation && `(${country.nextAbbreviation})`}
+        </Heading>
         <AnalogClock
           {...options}
           useCustomTime
           seconds={datetime.second()}
           minutes={datetime.minute()}
-          hours={datetime.hour()}
+          hours={datetime.hour() + datetime.minute() / 60}
         />
         <Box fontSize="175%">
           <Clock

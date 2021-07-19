@@ -13,7 +13,10 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv1J8JeB52Jb5dZYt6LUkkYPkUaV4ySNg&libraries=places"></script>
+          <script
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&types=cities&libraries=places`}
+            // https://maps.googleapis.com/maps/api/place/autocomplete/json?types=(cities)&language=pt_BR&key=YOUR_API_KEY
+          ></script>
         </body>
       </Html>
     );

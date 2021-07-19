@@ -9,11 +9,13 @@ import {
   FormLabel,
   Heading,
   Input,
+  ListItem,
   NumberInput,
   Select,
   Slide,
   Switch,
   Text,
+  UnorderedList,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -57,8 +59,9 @@ const IndexPage = () => {
       clearSuggestions,
     } = usePlacesAutocomplete({
       requestOptions: {
-        /* Define search scope here */
+        types: ["cities"],
       },
+
       debounce: 300,
     });
     const ref = useOnclickOutside(() => {
@@ -72,54 +75,47 @@ const IndexPage = () => {
       setValue(e.target.value);
     };
 
-    const handleSelect =
-      ({ description }) =>
-      () => {
-        // When user selects a place, we can replace the keyword without request data from API
-        // by setting the second parameter to "false"
-        setValue(description, false);
-        clearSuggestions();
-        let returnedCord;
-        // Get latitude and longitude via utility functions
-        getGeocode({ address: description })
-          .then((results) => {
-            // console.log(results[0].address_components[0].long_name);
-            console.log(results);
-            console.log(getLatLng(results[0]));
-          })
-          .then((obj) => {
-            console.log(obj);
-            // console.log("📍 Coordinates: ", { lat, lng });
-            // FIXME:FIXME:FIXME:GIVE LAT AND LONG TO API TO GE TTIMEZONEFIXME:FIXME:FIXME:
-            // getTimezone(lat, lng);
-          })
-          .catch((error) => {
-            console.log("😱 Error: ", error);
-          });
+    const handleSelect = async ({ place_id, description, types }) => {
+      // When user selects a place, we can replace the keyword without request data from API
+      // by setting the second parameter to "false"
+      setValue(description, false);
+      clearSuggestions();
 
-        // const returnedCord={lat,lng}
-      };
+      const results = await getGeocode({
+        placeId: place_id,
+      });
+
+      const city = results[0].address_components[0].long_name;
+      const { lat, lng } = await getLatLng(results[0]);
+
+      return getTimezone(lat, lng, city);
+    };
+    // const types = ["country"];
 
     const renderSuggestions = () =>
-      data.map((suggestion) => {
+      data.map((suggestion, i) => {
+        console.log(suggestion);
         const {
           place_id,
+          types: [country = "cities"],
           structured_formatting: { main_text, secondary_text },
         } = suggestion;
+        // FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME:FIX CITY FILTERING  FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME: FIXME:FIXME:
+        console.log(country);
 
         return (
-          <li
-            key={place_id}
-            onClick={handleSelect(suggestion)}
-            style={{
-              width: "100%",
-              border: "0.25px solid gray",
-              listStyle: "none",
-              margin: "5px",
-            }}
-          >
-            <strong>{main_text}</strong> <small>{secondary_text}</small>
-          </li>
+          <UnorderedList zIndex="overlay" key={i}>
+            <ListItem
+              key={place_id}
+              onClick={() => handleSelect(suggestion)}
+              width="100%"
+              border="0.25px solid gray"
+              margin="5px"
+              listStyleType="none"
+            >
+              <strong>{main_text}</strong> <small>{secondary_text}</small>
+            </ListItem>
+          </UnorderedList>
         );
       });
 
@@ -150,6 +146,7 @@ const IndexPage = () => {
       hour: toggleHandColor,
       second: "red",
     },
+    // zIndex: "0",
   };
 
   const [, getTimezone] = useAsyncFn(async (lat, lng, city) => {
@@ -157,21 +154,22 @@ const IndexPage = () => {
       `http://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
     );
     const responseData = await response.json();
-    console.log(responseData);
-    console.log("WOW IT WORKED");
     responseData.city = city;
-    // console.log(responseData);
-    setClockStack((prev) => [...prev, responseData]);
+
+    setClockStack((prev) => {
+      console.log(prev);
+      return [...prev, responseData];
+    });
   }, []);
   console.log(clockStack);
   return (
     <Center h="100vh">
       <Flex direction="column" alignItems="center">
         <Flex mb="10">
-          {/* <Button onClick={() => getTimezone(12, -82)}></Button> */}
           <PlacesAutocomplete />
         </Flex>
         <Flex>
+          {/* {console.log(clockStack)} */}
           <RenderClocks arr={clockStack} options={options} />
         </Flex>
       </Flex>
