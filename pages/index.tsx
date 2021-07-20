@@ -2,41 +2,23 @@ import {
   Box,
   Button,
   Center,
-  Checkbox,
   Flex,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Heading,
   Input,
-  ListItem,
-  NumberInput,
-  Select,
-  Slide,
-  Switch,
-  Text,
-  UnorderedList,
-  useColorMode,
   useColorModeValue,
-  useDisclosure,
 } from "@chakra-ui/react";
-
 import React, { useEffect, useState } from "react";
 import { useAsync, useAsyncFn } from "react-use";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { useRef } from "react";
-import Clock from "react-live-clock";
+
 import RenderClocks from "../components/RenderClocks";
-import getCountriesOptions from "../helpers/getCountries";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
-// import { getLocationOrigin } from "next/dist/next-server/lib/utils";
-// import PlacesAutocomplete from "../components/PlacesAutocomplete";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -44,23 +26,14 @@ dayjs.extend(timezone);
 const IndexPage = () => {
   const toggleClockColor = useColorModeValue("black", "white");
   const toggleHandColor = useColorModeValue("white", "black");
-  const [city, setcity] = useState("");
-  const [country, setCountry] = useState("");
   const [clockStack, setClockStack] = useState([
     { countryName: "Your current time", zoneName: dayjs.tz.guess() },
   ]);
   const PlacesAutocomplete = () => {
-    const search = useRef();
-    // var requestOptions = {
-    //   types: ["(cities)"],
-    //   componentRestrictions: { country: "us" },
-    // };
-
     const {
       ready,
       value,
       suggestions: { status, data },
-      // suggestions,
       setValue,
       clearSuggestions,
     } = usePlacesAutocomplete({
@@ -71,7 +44,6 @@ const IndexPage = () => {
 
       debounce: 300,
     });
-    // console.log(request);
 
     const ref = useOnclickOutside(() => {
       // When user clicks outside of the component, we can dismiss
@@ -109,36 +81,6 @@ const IndexPage = () => {
           structured_formatting: { main_text, secondary_text },
         } = suggestion;
 
-        // FIXME:FIXME:FIXME:FIXME:FIXME:
-        // if (
-        //   !types.includes("administrative_area_level_3") &&
-        //   !types.includes("locality")
-        //   // !suggestion.types.includes("country")
-        // )
-        //   return;
-        // console.log(
-        //   new google.maps.places.AutocompleteService().getPlacePredictions(
-        //     (input) => {
-        //       // console.log(arr);
-        //     }
-        //   )
-        // );
-
-        // const wow =
-        //   new google.maps.places.AutocompleteService().getPlacePredictions(
-        //     null,
-        //     (arr) => {
-        //       arr: {
-        //         {
-        //           {
-        //             types: "country";
-        //           }
-        //         }
-        //       }
-        //     }
-        //   );
-
-        // FIXME:FIXME:FIXME:FIXME:FIXME:
         return (
           <Box
             key={place_id}
@@ -164,7 +106,6 @@ const IndexPage = () => {
             disabled={!ready}
             placeholder="Where are you going?"
             border="1px solid black"
-            ref={search}
             width="10vw"
           />
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
@@ -222,7 +163,7 @@ const IndexPage = () => {
           <PlacesAutocomplete />
         </Flex>
         <Flex>
-          {/* {console.log(clockStack)} */}
+          {console.log(clockStack)}
           <RenderClocks arr={clockStack} options={options} />
         </Flex>
       </Flex>

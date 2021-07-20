@@ -1,16 +1,11 @@
 import {
-  useColorModeValue,
   Box,
   Heading,
-  FormControl,
-  FormLabel,
-  Center,
   Flex,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-  Button,
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -19,11 +14,7 @@ import React from "react";
 import AnalogClock from "analog-clock-react";
 import Clock from "react-live-clock";
 import { useUpdate } from "react-use";
-import { parse } from "path";
 import { useState } from "react";
-import { useRef } from "react";
-// import { parse } from "path";
-
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -35,6 +26,13 @@ export default function RenderClocks({ arr, options }) {
 
   return arr.map((country, i) => {
     const datetime = dayjs().tz(country.zoneName);
+
+    // var time = country.formatted;
+    // var myDate = new Date(time);
+    // console.log(myDate);
+    // console.log(country);
+
+    let defaultTime = datetime.hour() + datetime.minute() / 60;
 
     return (
       <Flex m="0 3%" key={i} direction="column" alignItems="center">
@@ -51,10 +49,12 @@ export default function RenderClocks({ arr, options }) {
           {...options}
           useCustomTime
           seconds={datetime.second()}
-          minutes={minute || datetime.minute()}
-          // minutes={minute}
-          hours={hour || datetime.hour() + datetime.minute() / 60}
-          // hours={hour}
+          // minutes={minute === null ? datetime.minute() : minute}
+          // hours={
+          //   hour === null ? datetime.hour() + datetime.minute() / 60 : hour
+          // }
+          minutes={datetime.minute()}
+          hours={datetime.hour()}
         />
 
         <Box fontSize="175%">
@@ -66,46 +66,28 @@ export default function RenderClocks({ arr, options }) {
             onChange={() => update()}
           />
         </Box>
-
-        {/* FIXME: */}
-        {/* {console.log(dayjs().hour()/100)} */}
         <Slider
           aria-label="slider-ex-1"
-          defaultValue={
-            ((dayjs().hour() + dayjs().minute() / 60) / 24 / 100) * 24
-          }
-          // min={0}
+          defaultValue={defaultTime}
+          min={0}
           max={24}
-          // step={}
+          step={0.25}
           onChange={(e) => {
-            console.log(e);
+            console.log(e > defaultTime);
+            // FIXME:BASED ON WHETHER GREATER, ADD OR SUBTRACT DELTA AND APPLY TO REST OF CLOCKSFIXME:
 
-            setHour(e);
-            // setMinute(e / 24);
+            // console.log(e - datetime.hour());
+            // setHour(e);
+
+            // setMinute(e * 60);
           }}
         >
-          {console.log(((dayjs().hour() + dayjs().minute() / 60) / 24) * 24)}
+          {/* {console.log(((dayjs().hour() + dayjs().minute() / 60) / 24) * 24)} */}
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
           <SliderThumb />
         </Slider>
-        {/* <Slider
-          aria-label="slider-ex-1"
-          defaultValue={datetime.minute()}
-          min={0}
-          max={60}
-          step={5}
-          onChange={(e) => {
-            setMinute(e);
-          }}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider> */}
-        {/* FIXME: */}
       </Flex>
     );
   });
