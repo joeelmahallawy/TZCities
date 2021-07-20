@@ -4,6 +4,10 @@ import {
   Center,
   Flex,
   Input,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -11,8 +15,6 @@ import { useAsync, useAsyncFn } from "react-use";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import { useRef } from "react";
-
 import RenderClocks from "../components/RenderClocks";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -38,10 +40,9 @@ const IndexPage = () => {
       clearSuggestions,
     } = usePlacesAutocomplete({
       requestOptions: {
-        // types: ["(cities)"],
+        types: ["(regions)"],
         // componentRestrictions: { country: "us" },
       },
-
       debounce: 300,
     });
 
@@ -106,7 +107,7 @@ const IndexPage = () => {
             disabled={!ready}
             placeholder="Where are you going?"
             border="1px solid black"
-            width="10vw"
+            width="20vw"
           />
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
           {status === "OK" && (
@@ -136,14 +137,12 @@ const IndexPage = () => {
       second: "red",
     },
   };
-
   const [, getTimezone] = useAsyncFn(async (lat, lng, city) => {
     const response = await fetch(
       `http://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
     );
     const responseData = await response.json();
     responseData.city = city;
-
     setClockStack((prev) => {
       const alreadyExists = prev.some((loc) => {
         // IF ALREADY EXISTS IN ARRAY
@@ -158,15 +157,14 @@ const IndexPage = () => {
 
   return (
     <Center h="100vh">
-      <Flex direction="column" alignItems="center">
+      <Box w="400px">
         <Flex mb="10">
           <PlacesAutocomplete />
         </Flex>
-        <Flex>
-          {console.log(clockStack)}
-          <RenderClocks arr={clockStack} options={options} />
-        </Flex>
-      </Flex>
+        <Box w="100%">
+          <RenderClocks arr={clockStack} />
+        </Box>
+      </Box>
     </Center>
   );
 };
