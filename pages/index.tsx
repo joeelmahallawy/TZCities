@@ -4,13 +4,15 @@ import {
   Center,
   Flex,
   Input,
+  List,
+  ListItem,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAsync, useAsyncFn } from "react-use";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -26,11 +28,11 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const IndexPage = () => {
-  const toggleClockColor = useColorModeValue("black", "white");
-  const toggleHandColor = useColorModeValue("white", "black");
+  const clickMe = useRef();
   const [clockStack, setClockStack] = useState([
     { countryName: "Your current time", zoneName: dayjs.tz.guess() },
   ]);
+
   const PlacesAutocomplete = () => {
     const {
       ready,
@@ -77,66 +79,65 @@ const IndexPage = () => {
       return data.map((suggestion, i) => {
         const {
           place_id,
-          types,
-          terms,
+
           structured_formatting: { main_text, secondary_text },
         } = suggestion;
 
         return (
-          <Box
+          <ListItem
+            // id={`${i}`}
+            ref={clickMe}
             key={place_id}
-            // bg="red"
             onClick={() => handleSelect(suggestion)}
-            width="100%"
-            border="0.25px solid gray"
-            margin="5px"
             listStyleType="none"
+            _hover={{ bg: "#DFDFDF" }}
+            fontSize="115%"
+            p="1%"
           >
             <strong>{main_text}</strong> <small>{secondary_text}</small>
-          </Box>
+          </ListItem>
         );
       });
     };
 
     return (
-      <div ref={ref} style={{ display: "flex" }}>
-        <div>
+      <Flex ref={ref} w="95%" ml="2.5%">
+        <Box w="100%">
           <Input
             value={value}
             onChange={handleInput}
             disabled={!ready}
-            placeholder="Where are you going?"
-            border="1px solid black"
-            width="20vw"
+            placeholder="Search for a city or country"
+            pos="sticky"
+            top="0"
+            fontSize="125%"
+            onKeyDown={(e) => {
+              // console.log(e);
+              // console.log(cursor);
+              console.log(data[0]);
+
+              if (data.length > 0 && e.key == "a") console.dir(clickMe.current);
+            }}
           />
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
           {status === "OK" && (
             <Box
-              borderRadius="10px"
-              bg="red"
-              fontSize="100%"
-              w="10vw"
-              pos="fixed"
-              zIndex="15"
+              p="1%"
+              mt="1%"
+              borderBottomRadius="10px"
+              bg="#EFEFEF"
+              boxShadow="0px 2px 5px gray"
             >
-              {renderSuggestions()}
+              {" "}
+              <List>{renderSuggestions()}</List>
             </Box>
           )}
-        </div>
+        </Box>
         <Button onClick={() => console.log("hi")}>Click me!</Button>
-      </div>
+      </Flex>
     );
   };
 
-  const options = {
-    width: "300px",
-    baseColor: toggleClockColor,
-    handColors: {
-      minute: toggleHandColor,
-      hour: toggleHandColor,
-      second: "red",
-    },
-  };
   const [, getTimezone] = useAsyncFn(async (lat, lng, city) => {
     const response = await fetch(
       `http://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
@@ -156,17 +157,78 @@ const IndexPage = () => {
   }, []);
 
   return (
-    <Center h="100vh">
-      <Box w="400px">
-        <Flex mb="10">
-          <PlacesAutocomplete />
-        </Flex>
-        <Box w="100%">
-          <RenderClocks arr={clockStack} />
-        </Box>
+    <Flex>
+      <Box w="25%" mt={10} pos="-webkit-sticky">
+        <PlacesAutocomplete />
       </Box>
-    </Center>
+      <Center
+        flexDir="column"
+        w="100%"
+        mt="2%"
+        mr="2.5%"
+        maxH="100%"
+        minH="100vh"
+        // bg="red.100"
+      >
+        <RenderClocks arr={clockStack} />
+      </Center>
+    </Flex>
   );
 };
 
 export default IndexPage;
+
+// FIXME:FIXME:FIXME:FIXME:FIXME:
+
+// const Item = ({ character, focus, index, setFocus }) => {
+//   const ref = useRef(null);
+
+//   useEffect(() => {
+//     if (focus) {
+//       // Move element into view when it is focused
+//       ref.current.focus();
+//     }
+//   }, [focus]);
+
+//   const handleSelect = useCallback(() => {
+//     alert(`${character}`);
+//     // setting focus to that element when it is selected
+//     setFocus(index);
+//   }, [character, index, setFocus]);
+
+//   return (
+//     <li
+//       tabIndex={focus ? 0 : -1}
+//       role="button"
+//       ref={ref}
+//       onClick={handleSelect}
+//       onKeyPress={handleSelect}
+//     >
+//       {character}
+//     </li>
+//   );
+// };
+
+function Toolbar(props) {
+  return (
+    <div role="toolbar">
+      <FocusScope>{props.children}</FocusScope>
+    </div>
+  );
+}
+
+function ToolbarButton(props) {
+  let focusManager = useFocusManager();
+  let onKeyDown = (e) => {
+    switch (e.key) {
+      case "ArrowRight":
+        focusManager.focusNext({ wrap: true });
+        break;
+      case "ArrowLeft":
+        focusManager.focusPrevious({ wrap: true });
+        break;
+    }
+  };
+
+  return <button onKeyDown={onKeyDown}>{props.children}</button>;
+}

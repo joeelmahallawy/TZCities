@@ -16,78 +16,93 @@ import React, { useRef } from "react";
 import Clock from "react-live-clock";
 import { useUpdate } from "react-use";
 import { useState } from "react";
+import getSliderValue from "../helpers/getSliderValue";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function RenderClocks({ arr }) {
-  const [PrevDelta, setPrevDelta] = useState();
   const [delta, setDelta] = useState(null);
   const slider = useRef();
   const update = useUpdate();
 
   return arr.map((country, i) => {
-    // function getSliderValue() {
-    //   if (delta && datetime.hour() + delta > 24)
-    //     console.log(datetime.hour() - 24);
-    //   // return datetime.hour() - 24;
-    //   if (delta && datetime.hour() + delta < 0) return datetime.hour() + 24;
-    // }
+    if (!country.zoneName) return;
     const datetime = dayjs().tz(country.zoneName);
 
     return (
-      <Box w="100%" key={i} alignItems="center">
-        <Heading mb="5" fontSize="175%">
-          {country.city
-            ? `${country.city}`
-            : // `${country.countryName}` `${country.countryCode}`
-              "Your current time"}
+      <Box w="100%" key={i} alignItems="center" mt="2.25%">
+        <Flex alignItems="center">
+          <Heading mb="5" pl="2.5%" mt="1%" fontSize="200%" fontWeight="600">
+            {country.city
+              ? `${country.city}`
+              : // `${country.countryName}` `${country.countryCode}`
+                "Your current time"}
+            {country.nextAbbreviation && `(${country.nextAbbreviation})`}:{" "}
+          </Heading>
+          <Heading fontWeight="300" margin="1%">
+            {delta !== null ? (
+              <Clock
+                date={`${datetime
+                  .hour(getSliderValue(datetime, delta))
+                  .minute((delta - Math.floor(delta)) * 60)}`}
+                ticking={true}
+                format={"h:mm:ss a"}
+                timezone={country.zoneName}
+                onChange={() => update()}
+              />
+            ) : (
+              <Clock
+                ticking={true}
+                format={"h:mm:ss a"}
+                timezone={country.zoneName}
+                onChange={() => update()}
+              />
+            )}
+          </Heading>
+        </Flex>
+        <Flex>
+          <Slider
+            aria-label="slider-ex-4"
+            value={getSliderValue(datetime, delta)}
+            max={24}
+            min={0}
+            step={0.16666667}
+            // step={1 / 60}
+            ref={slider}
+            mr="5%"
+            mb="1%"
+            onChange={(e) => {
+              setDelta(e - datetime.hour());
+            }}
+          >
+            <SliderTrack bg="red">
+              <SliderFilledTrack bg="blue" />
+            </SliderTrack>
+            <SliderThumb boxSize={10} bg="black">
+              <Box
+                color="tomato"
+                //  as={}
+              />
+            </SliderThumb>
+          </Slider>
+          <Button
+            fontSize="150%"
+            size="xl"
+            p="1%"
+            onClick={() => {
+              setDelta(null);
+            }}
+          >
+            Get Current Times
+          </Button>
+        </Flex>
 
-          {country.nextAbbreviation && `(${country.nextAbbreviation})`}
-        </Heading>
-        <Slider
-          aria-label="slider-ex-4"
-          defaultValue={datetime.hour() + datetime.minute() / 60}
-          value={
-            delta && PrevDelta + datetime.hour() > 24
-              ? PrevDelta + datetime.hour() - 24
-              : delta && PrevDelta + datetime.hour() < 0
-              ? PrevDelta + datetime.hour() + 24
-              : delta + datetime.hour()
-          }
-          // FIXME:FIXME:FIXME:FIXME:FIXME:
-          max={24}
-          min={0}
-          step={0.25}
-          ref={slider}
-          onChange={(e) => {
-            setDelta(e - datetime.hour());
-            setPrevDelta(delta);
-            console.log(e);
-            // console.log();
-            // console.log(e + datetime.hour() > 24);
-            // console.log(e);
-            // console.log(e - datetime.hour());
-          }}
-        >
-          {/* {console.log(datetime.hour() - 24)} */}
-          <SliderTrack bg="red">
-            <SliderFilledTrack bg="blue" />
-          </SliderTrack>
-          <SliderThumb boxSize={10} bg="black">
-            <Box
-              color="tomato"
-              //  as={}
-            />
-          </SliderThumb>
-        </Slider>
-
-        <Center fontSize="175%">
-          {/* {console.log(delta)} */}
-          {delta !== null ? (
+        {/* <Center fontSize="175%"> */}
+        {/* {delta !== null ? (
             <Clock
               date={`${datetime
-                .hour(datetime.hour() + delta)
-                .minute(Math.abs(delta - Math.floor(delta)) * 60)}`}
+                .hour(getSliderValue(datetime, delta))
+                .minute((delta - Math.floor(delta)) * 60)}`}
               ticking={true}
               format={"h:mm:ss a"}
               timezone={country.zoneName}
@@ -101,7 +116,7 @@ export default function RenderClocks({ arr }) {
               onChange={() => update()}
             />
           )}
-        </Center>
+        </Center> */}
       </Box>
     );
   });
