@@ -8,6 +8,7 @@ import {
   SliderThumb,
   SliderTrack,
   Button,
+  Divider,
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -33,7 +34,7 @@ export default function RenderClocks({ arr }) {
       <Box w="100%" key={i} alignItems="center" mt="2.25%">
         <Flex alignItems="center" gridGap="1%" pb="1%">
           <Heading
-            fontSize={["95%", "100%", "125%", "150%", "160%", "175%"]}
+            fontSize={["85%", "80%", "115%", "150%", "160%", "175%"]}
             fontWeight="600"
           >
             {country.city ? `${country.city}` : "Your current time"}
@@ -41,7 +42,8 @@ export default function RenderClocks({ arr }) {
           </Heading>
           <Heading
             fontWeight="300"
-            fontSize={["100%", "130%", "145%", "160%", "170%", "175%"]}
+            // fontSize={["100%", "130%", "145%", "160%", "170%", "175%"]}
+            fontSize={["85%", "80%", "115%", "150%", "160%", "175%"]}
           >
             {delta !== null ? (
               <Clock
@@ -65,21 +67,19 @@ export default function RenderClocks({ arr }) {
           {i === 0 ? (
             <Button
               ml="auto"
-              // fontSize="140%"
-              fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
+              fontSize={["80%", "95%", "110%", "120%", "130%", "160%"]}
               size="xl"
-              p="1%"
+              p="1.25%"
               _focus={{ outline: "none" }}
               onClick={() => {
                 setDelta(null);
               }}
             >
-              Get Current Times
+              Get Current Time
             </Button>
           ) : (
             <Button
               ml="auto"
-              // fontSize="140%"
               fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
               size="xl"
               p="1%"
@@ -99,25 +99,44 @@ export default function RenderClocks({ arr }) {
           value={getSliderValue(datetime, delta)}
           max={24}
           min={0}
-          step={0.16666667}
-          // step={1 / 60}
+          step={0.16666667} // (1/6) for 10 minutes intervals
           ref={slider}
           mr="5%"
           mb="1%"
           onChange={(e) => {
             setDelta(e - datetime.hour());
           }}
+          height={12}
         >
-          <SliderTrack bg="red">
-            <SliderFilledTrack bg="blue" />
+          <SliderTrack height={8} overflow="auto">
+            <SliderFilledTrack />
           </SliderTrack>
-          <SliderThumb boxSize={[5, 6, 7, 8, 9, 10]} bg="black">
-            <Box
-              color="tomato"
-              //  as={}
-            />
-          </SliderThumb>
+          <SliderThumb
+            boxSize={5}
+            height={10}
+            borderRadius={5}
+            boxShadow="0.5px 0.5px 0.5px 0.5px gray"
+          ></SliderThumb>
         </Slider>
+        <Flex
+          style={{
+            width: "100%",
+            height: "100%",
+            marginLeft: -5,
+          }}
+        >
+          {Array.from(new Array(24)).map((step, index) => (
+            <Flex
+              key={index}
+              style={{
+                width: `${100 / 24}%`,
+              }}
+              fontSize={["50%", "65%", "75%", "100%", "100%"]}
+            >
+              {index}
+            </Flex>
+          ))}
+        </Flex>
       </Box>
     );
   });

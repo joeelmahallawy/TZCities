@@ -8,6 +8,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  ListItem,
+  OrderedList,
+  Image,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useAsync, useAsyncFn } from "react-use";
@@ -22,8 +25,10 @@ import usePlacesAutocomplete, {
 import { AiOutlineClockCircle } from "react-icons/ai";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { FocusScope, useFocusManager } from "@react-aria/focus";
-import { IoIosPin, IoIosSearch } from "react-icons/io";
+import { IoIosPin, IoIosSearch, IoIosHelpCircle } from "react-icons/io";
 import handleInputEvents from "../helpers/handleInputEvents";
+import RenderHelpBlock from "../helpers/renderHelpBlock";
+import TZGet from "../logoImage/TZGet.png";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -32,7 +37,7 @@ const IndexPage = () => {
   const firstSuggestion = useRef();
   const search = useRef();
   const [clockStack, setClockStack] = useState(timezoneStackSetter);
-  // const [previouslySearched, setPreviouslySearched] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   function timezoneStackSetter() {
     return typeof window !== "undefined" &&
@@ -51,48 +56,47 @@ const IndexPage = () => {
       clearSuggestions,
     } = usePlacesAutocomplete({
       requestOptions: {
-        types: ["(regions)"],
+        types: ["(cities)"],
       },
       debounce: 300,
     });
-
+    // DISMISSING SUGGESTIONS
     const ref = useOnclickOutside(() => {
-      // When user clicks outside of the component, we can dismiss
-      // the searched suggestions by calling this method
       clearSuggestions();
     });
-
+    // HANDLE INPUTS
     const handleInput = (e) => {
       // Update the keyword of the input element
-      // console.log(e);
       setValue(e.target.value);
     };
 
+    // HANDLE SELECTIONS
     const handleSelect = async ({ place_id, description }) => {
-      // When user selects a place, we can replace the keyword without request data from API
-      // by setting the second parameter to "false"
       setValue(description, false);
       clearSuggestions();
 
       const results = await getGeocode({
         placeId: place_id,
       });
+
       const city = results[0].address_components[0].long_name;
       const { lat, lng } = await getLatLng(results[0]);
 
-      return getTimezone(lat, lng, city);
+      return getTimezone(lat, lng, city, place_id);
     };
 
+    // RENDERING SUGGESTIONS WHEN TYPING
     const renderSuggestions = () => {
       let previouslySearched;
+
       return data.map((suggestion, i) => {
         const {
           place_id,
           structured_formatting: { main_text, secondary_text },
         } = suggestion;
 
-        if (localStorage.getItem(`${main_text}`)) previouslySearched = true;
-        if (!localStorage.getItem(`${main_text}`)) previouslySearched = false;
+        if (localStorage.getItem(`${place_id}`)) previouslySearched = true;
+        if (!localStorage.getItem(`${place_id}`)) previouslySearched = false;
         return (
           <Box
             p={1}
@@ -127,18 +131,18 @@ const IndexPage = () => {
         );
       });
     };
+    // SUGGESTION OPTIONS CONTAINER
     function SearchOptionsContainer(props) {
       return (
-        <Box role="toolbar" w="100%" p="0">
+        <Box role="toolbar" p="0">
           <FocusScope>{props.children}</FocusScope>
         </Box>
       );
     }
-
+    // SUGGESTION OPTIONS ELEMENTS
     function SearchOptions(props, suggest) {
       let focusManager = useFocusManager();
       let onKeyDown = (e) => {
-        console.log(e);
         e.preventDefault();
         switch (e.key) {
           case "ArrowDown":
@@ -152,13 +156,8 @@ const IndexPage = () => {
           case "Enter":
             handleSelect(suggest);
           case "Backspace":
+            // @ts-expect-error
             search.current.focus();
-          // handleInput(search.current.value.slice(0, -1));
-          // search.current.value = search.current.value.slice(0, -1);
-          // console.log(search.current.value.slice(0, -1));
-          // search.current.value.pop();
-          // search.current?.focus();
-          // FIXME:
         }
       };
 
@@ -181,9 +180,10 @@ const IndexPage = () => {
         </Button>
       );
     }
+    // PLACES AUTOCOMPLETE
 
     return (
-      <Flex ref={ref} w="80%">
+      <Flex ref={ref} w="80%" alignItems="center">
         <Box w="40%">
           <Flex
             // w="20vw"
@@ -191,7 +191,7 @@ const IndexPage = () => {
             h={["60%", "70%", "80%", "90%", "100%"]}
             border="1px solid black"
             borderRadius="10px"
-            _focusWithin={{ boxShadow: "1px 1px 1px gray" }}
+            _focusWithin={{ boxShadow: "0.5px 0.5px 0.5px gray" }}
           >
             <InputGroup h="100%">
               <Input
@@ -208,12 +208,12 @@ const IndexPage = () => {
                 _focus={{ outline: "none" }}
                 onKeyDown={(e) => handleInputEvents(e, firstSuggestion, data)}
               />
+
               <InputRightElement
                 h="100%"
                 children={
                   <IoIosSearch
                     size="90%"
-                    // size={["80px", "85px", "90px", "95px", "100px"]}
                     // @ts-expect-error
                     onClick={() => search.current?.focus()}
                   />
@@ -228,7 +228,7 @@ const IndexPage = () => {
               borderBottomRadius="10px"
               bg="white"
               pos="absolute"
-              w="20vw"
+              w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
               mt="5px"
               zIndex="15"
               boxShadow="0px 2px 5px gray"
@@ -239,13 +239,26 @@ const IndexPage = () => {
             </Flex>
           )}
         </Box>
+        <Box
+          ml={["60%", "45%", "30%", "15%", "0%"]}
+          onMouseEnter={() => setShowHelp(true)}
+          onMouseLeave={() => setShowHelp(false)}
+        >
+          <Box _hover={{ cursor: "pointer" }}>
+            <IoIosHelpCircle
+              color="gray"
+              alignmentBaseline="central"
+              size="25px"
+            />
+          </Box>
+          {showHelp && <RenderHelpBlock />}
+        </Box>
       </Flex>
     );
   };
   // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:END OF AUTOPALCESFIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
-
-  const [, getTimezone] = useAsyncFn(async (lat, lng, city) => {
-    localStorage.setItem(`${city}`, `${city}`);
+  const [, getTimezone] = useAsyncFn(async (lat, lng, city, placeID) => {
+    localStorage.setItem(`${placeID}`, `${city}`);
     const response = await fetch(
       `http://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
     );
@@ -274,8 +287,13 @@ const IndexPage = () => {
 
   return (
     <Center>
-      <Box flexDir="column" w="65%" mt="2%" mr="2.5%" maxH="100%" minH="90vh">
-        <PlacesAutocomplete />
+      <Box w="65%" mt="2%" mr="2.5%" maxH="100%" minH="90vh">
+        <Flex justifyContent="space-between">
+          <PlacesAutocomplete />
+          <Box textAlign="left">
+            <Image src={TZGet.src} />
+          </Box>
+        </Flex>
         <RenderClocks arr={clockStack} />
       </Box>
     </Center>
