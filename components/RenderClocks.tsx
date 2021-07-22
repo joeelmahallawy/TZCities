@@ -122,7 +122,7 @@ export default function RenderClocks({ arr }) {
             height={10}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px gray"
-            defaultValue={datetime.hour() + datetime.minute() / 60}
+            aria-valuenow={datetime.hour() + datetime.minute() / 60}
           ></SliderThumb>
         </Slider>
         <Flex
