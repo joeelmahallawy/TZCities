@@ -93,14 +93,7 @@ export default function RenderClocks({ arr }) {
             </Button>
           )}
         </Flex>
-        {/* FIXME: */}
-        <Slider aria-label="slider-ex-1" defaultValue={30}>
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-        {/* FIXME: */}
+
         <Slider
           aria-label="slider-ex-4"
           // defaultValue={datetime.hour() + datetime.minute() / 60}
@@ -118,6 +111,7 @@ export default function RenderClocks({ arr }) {
         >
           <SliderTrack height={8} overflow="auto">
             <SliderFilledTrack
+              defaultValue={datetime.hour() + datetime.minute() / 60}
               w={`${(datetime.hour() + datetime.minute() / 60) / 24}%`}
               // w="unset"
               // w="100%"
