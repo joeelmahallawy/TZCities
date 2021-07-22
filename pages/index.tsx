@@ -6,9 +6,7 @@ import {
   Flex,
   Heading,
   Input,
-  FormControl,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
@@ -21,9 +19,11 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+import { AiOutlineClockCircle } from "react-icons/ai";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { FocusScope, useFocusManager } from "@react-aria/focus";
 import { IoIosPin, IoIosSearch } from "react-icons/io";
+import handleInputEvents from "../helpers/handleInputEvents";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -31,12 +31,16 @@ dayjs.extend(timezone);
 const IndexPage = () => {
   const firstSuggestion = useRef();
   const search = useRef();
-  const clickMe = useRef();
-  const [clockStack, setClockStack] = useState([
-    { countryName: "Your current time", zoneName: dayjs.tz.guess() },
-  ]);
-  // const arr = ["1", "2", "3", "4", "5"];
-  // console.log(arr);
+  const [clockStack, setClockStack] = useState(timezoneStackSetter);
+  // const [previouslySearched, setPreviouslySearched] = useState(false);
+
+  function timezoneStackSetter() {
+    return typeof window !== "undefined" &&
+      localStorage.getItem("timezoneStack")
+      ? JSON.parse(localStorage.getItem("timezoneStack"))
+      : [{ countryName: "Your current time", zoneName: dayjs.tz.guess() }];
+  }
+
   // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:BEGINNING OF AUTOPALCESFIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
   const PlacesAutocomplete = () => {
     const {
@@ -48,7 +52,6 @@ const IndexPage = () => {
     } = usePlacesAutocomplete({
       requestOptions: {
         types: ["(regions)"],
-        // componentRestrictions: { country: "us" },
       },
       debounce: 300,
     });
@@ -61,6 +64,7 @@ const IndexPage = () => {
 
     const handleInput = (e) => {
       // Update the keyword of the input element
+      // console.log(e);
       setValue(e.target.value);
     };
 
@@ -75,31 +79,46 @@ const IndexPage = () => {
       });
       const city = results[0].address_components[0].long_name;
       const { lat, lng } = await getLatLng(results[0]);
+
       return getTimezone(lat, lng, city);
     };
 
     const renderSuggestions = () => {
+      let previouslySearched;
       return data.map((suggestion, i) => {
         const {
           place_id,
           structured_formatting: { main_text, secondary_text },
         } = suggestion;
+
+        if (localStorage.getItem(`${main_text}`)) previouslySearched = true;
+        if (!localStorage.getItem(`${main_text}`)) previouslySearched = false;
         return (
           <Box
-            p="0"
-            w="100%"
+            p={1}
+            w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
             onClick={() => {
               handleSelect(suggestion);
             }}
             key={place_id}
             onKeyDown={(e) => {
+              e.preventDefault();
+
               if (e.key === "Enter") handleSelect(suggestion);
             }}
             ref={i === 0 ? firstSuggestion : undefined}
           >
             <SearchOptions suggest={suggestion}>
-              <IoIosPin size="25px" />
-              <Heading fontSize="120%" mr="5px">
+              {previouslySearched ? (
+                <AiOutlineClockCircle
+                  alignmentBaseline="auto"
+                  size="25px"
+                  color="gray"
+                />
+              ) : (
+                <IoIosPin size="25px" color="gray" />
+              )}
+              <Heading fontSize="120%" ml="5px" mr="5px">
                 {main_text}
               </Heading>{" "}
               <Text color="gray">{secondary_text}</Text>
@@ -119,6 +138,8 @@ const IndexPage = () => {
     function SearchOptions(props, suggest) {
       let focusManager = useFocusManager();
       let onKeyDown = (e) => {
+        console.log(e);
+        e.preventDefault();
         switch (e.key) {
           case "ArrowDown":
             focusManager.focusNext({
@@ -130,6 +151,14 @@ const IndexPage = () => {
             break;
           case "Enter":
             handleSelect(suggest);
+          case "Backspace":
+            search.current.focus();
+          // handleInput(search.current.value.slice(0, -1));
+          // search.current.value = search.current.value.slice(0, -1);
+          // console.log(search.current.value.slice(0, -1));
+          // search.current.value.pop();
+          // search.current?.focus();
+          // FIXME:
         }
       };
 
@@ -144,6 +173,7 @@ const IndexPage = () => {
           _focus={{ bg: "#DFDFDF" }}
           onKeyDown={onKeyDown}
           onKeyDownCapture={(e) => {
+            e.preventDefault();
             if (e.key === "Escape") clearSuggestions();
           }}
         >
@@ -154,29 +184,29 @@ const IndexPage = () => {
 
     return (
       <Flex ref={ref} w="80%">
-        <Box w="50%">
+        <Box w="40%">
           <Flex
+            // w="20vw"
+            w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
+            h={["60%", "70%", "80%", "90%", "100%"]}
             border="1px solid black"
             borderRadius="10px"
             _focusWithin={{ boxShadow: "1px 1px 1px gray" }}
           >
-            <InputGroup>
+            <InputGroup h="100%">
               <Input
+                alignSelf="center"
                 variant="outline"
                 ref={search}
                 value={value}
                 onChange={handleInput}
                 disabled={!ready}
                 placeholder="Search for a city or country"
-                fontSize="125%"
+                fontSize={["70%", "80%", "105%", "115%", "125%"]}
                 size="lg"
                 border="none"
                 _focus={{ outline: "none" }}
-                onKeyDown={(e) => {
-                  if (data.length > 0 && e.key === "ArrowDown")
-                    // @ts-expect-error
-                    firstSuggestion.current.children[0].focus();
-                }}
+                onKeyDown={(e) => handleInputEvents(e, firstSuggestion, data)}
               />
               <InputRightElement
                 h="100%"
@@ -195,13 +225,10 @@ const IndexPage = () => {
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
           {status === "OK" && (
             <Flex
-              p="5px"
-              // mt="1%"
               borderBottomRadius="10px"
-              // bg="red"
               bg="white"
-              pos="fixed"
-              w="20%"
+              pos="absolute"
+              w="20vw"
               mt="5px"
               zIndex="15"
               boxShadow="0px 2px 5px gray"
@@ -212,34 +239,42 @@ const IndexPage = () => {
             </Flex>
           )}
         </Box>
-
-        {/* <Button onClick={() => handleSelect(suggestion)}>Click me!</Button> */}
       </Flex>
     );
   };
   // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:END OF AUTOPALCESFIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
 
   const [, getTimezone] = useAsyncFn(async (lat, lng, city) => {
+    localStorage.setItem(`${city}`, `${city}`);
     const response = await fetch(
       `http://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
     );
     const responseData = await response.json();
     responseData.city = city;
+
     setClockStack((prev) => {
       const alreadyExists = prev.some((loc) => {
-        // IF ALREADY EXISTS IN ARRAY
+        // IF ALREADY EXISTS IN ARRAY SET TRUE AND DONT ADD ANOTHER
         return loc.zoneName === responseData.zoneName;
       });
 
-      if (!alreadyExists) return [...prev, responseData];
-      alert("The timezone already exists");
+      if (!alreadyExists) {
+        localStorage.setItem(
+          `timezoneStack`,
+          JSON.stringify([...prev, responseData])
+        );
+        return [...prev, responseData];
+      }
+      alert("Timezone already exists");
       return [...prev];
     });
   }, []);
+  {
+  }
 
   return (
     <Center>
-      <Box flexDir="column" w="75%" mt="2%" mr="2.5%" maxH="100%" minH="90vh">
+      <Box flexDir="column" w="65%" mt="2%" mr="2.5%" maxH="100%" minH="90vh">
         <PlacesAutocomplete />
         <RenderClocks arr={clockStack} />
       </Box>

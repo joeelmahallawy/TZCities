@@ -20,22 +20,7 @@ import getSliderValue from "../helpers/getSliderValue";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// function deleteTime() {
-
-// }
-
 export default function RenderClocks({ arr }) {
-  // const myStorage = localStorage;
-  // localStorage.setItem("countriesArr", "arr[0].countryName");
-  // localStorage;
-  // useLocalStorage
-  // localStorage.
-  // localStorage.clear();
-  // const dataaa = JSON.stringify(arr);
-  // localStorage[1,2,3,4,5] = JSON.stringify(arr);
-  // localStorage["selectedCitiesArray"] = JSON.stringify([arr]);
-  // console.log(wow);
-
   const [delta, setDelta] = useState(null);
   const slider = useRef();
   const update = useUpdate();
@@ -77,38 +62,36 @@ export default function RenderClocks({ arr }) {
               />
             )}
           </Heading>
-          {
-            i === 0 ? (
-              <Button
-                ml="auto"
-                // fontSize="140%"
-                fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
-                size="xl"
-                p="1%"
-                _focus={{ outline: "none" }}
-                onClick={() => {
-                  setDelta(null);
-                }}
-              >
-                Get Current Times
-              </Button>
-            ) : (
-              <Button
-                ml="auto"
-                // fontSize="140%"
-                fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
-                size="xl"
-                p="1%"
-                _focus={{ outline: "none" }}
-                onClick={() => {
-                  arr.splice(i, 1);
-                }}
-              >
-                Delete Time
-              </Button>
-            )
-            // FIXME:FIXME:FIXME:FIXME:FIXME:
-          }
+          {i === 0 ? (
+            <Button
+              ml="auto"
+              // fontSize="140%"
+              fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
+              size="xl"
+              p="1%"
+              _focus={{ outline: "none" }}
+              onClick={() => {
+                setDelta(null);
+              }}
+            >
+              Get Current Times
+            </Button>
+          ) : (
+            <Button
+              ml="auto"
+              // fontSize="140%"
+              fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
+              size="xl"
+              p="1%"
+              _focus={{ outline: "none" }}
+              onClick={() => {
+                arr.splice(i, 1);
+                localStorage.setItem("timezoneStack", JSON.stringify(arr));
+              }}
+            >
+              Delete Time
+            </Button>
+          )}
         </Flex>
 
         <Slider
@@ -135,27 +118,6 @@ export default function RenderClocks({ arr }) {
             />
           </SliderThumb>
         </Slider>
-
-        {/* <Center fontSize="175%"> */}
-        {/* {delta !== null ? (
-            <Clock
-              date={`${datetime
-                .hour(getSliderValue(datetime, delta))
-                .minute((delta - Math.floor(delta)) * 60)}`}
-              ticking={true}
-              format={"h:mm:ss a"}
-              timezone={country.zoneName}
-              onChange={() => update()}
-            />
-          ) : (
-            <Clock
-              ticking={true}
-              format={"h:mm:ss a"}
-              timezone={country.zoneName}
-              onChange={() => update()}
-            />
-          )}
-        </Center> */}
       </Box>
     );
   });
