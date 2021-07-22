@@ -111,9 +111,10 @@ export default function RenderClocks({ arr }) {
         >
           <SliderTrack height={8} overflow="auto">
             <SliderFilledTrack
-              w={`${(datetime.hour() + datetime.minute() / 60) / 24}%`}
+              // w={`${(datetime.hour() + datetime.minute() / 60) / 24}%`}
+              w="unset"
               // w="100%"
-              bg="red"
+              // bg="red"
             />
           </SliderTrack>
           <SliderThumb
