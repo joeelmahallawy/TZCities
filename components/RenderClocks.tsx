@@ -93,7 +93,12 @@ export default function RenderClocks({ arr }) {
             </Button>
           )}
         </Flex>
-
+        <Slider aria-label="slider-ex-1" defaultValue={30}>
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
         <Slider
           aria-label="slider-ex-4"
           defaultValue={datetime.hour() + datetime.minute() / 60}
@@ -122,7 +127,7 @@ export default function RenderClocks({ arr }) {
             height={10}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px gray"
-            aria-valuenow={datetime.hour() + datetime.minute() / 60}
+            // aria-valuenow={datetime.hour() + datetime.minute() / 60}
           ></SliderThumb>
         </Slider>
         <Flex
