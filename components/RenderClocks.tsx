@@ -96,6 +96,7 @@ export default function RenderClocks({ arr }) {
 
         <Slider
           aria-label="slider-ex-4"
+          defaultValue={datetime.hour() + datetime.minute() / 60}
           value={getSliderValue(datetime, delta)}
           max={24}
           min={0}
