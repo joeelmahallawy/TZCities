@@ -46,7 +46,7 @@ const IndexPage = () => {
       : [{ countryName: "Your current time", zoneName: dayjs.tz.guess() }];
   }
 
-  // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:BEGINNING OF AUTOPALCESFIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
+  // BEGINNING OF AUTOCOMPLETE
   const PlacesAutocomplete = () => {
     const {
       ready,
@@ -256,7 +256,7 @@ const IndexPage = () => {
       </Flex>
     );
   };
-  // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:END OF AUTOPALCESFIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
+  // END OF AUTOCOMPLETE
   const [, getTimezone] = useAsyncFn(async (lat, lng, city, placeID) => {
     localStorage.setItem(`${placeID}`, `${city}`);
     const response = await fetch(
