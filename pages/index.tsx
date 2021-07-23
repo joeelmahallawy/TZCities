@@ -122,7 +122,6 @@ const IndexPage = () => {
               ) : (
                 <IoIosPin size="25px" color="gray" />
               )}
-              {/* FIXME:FIXME:FIXME: */}
               <Heading
                 fontSize={["50%", "60%", "80%", "95%", "115%"]}
                 ml="5px"
@@ -192,7 +191,6 @@ const IndexPage = () => {
       <Flex ref={ref} w="100%" alignItems="center" justifyContent="center">
         <Box mr={0} h={["30px", "35px", "40px", "45px", "55px"]}>
           <Flex w="30vw" h="100%">
-            {/* FIXME:FIXME:FIXME: */}
             <InputGroup>
               <Input
                 h="100%"
@@ -224,11 +222,12 @@ const IndexPage = () => {
             <Flex
               borderBottomRadius="6px"
               bg="gray.100"
+              // bg="red"
+              boxShadow="0.5px 0.5px 0.5px gray"
               pos="absolute"
               mt="5px"
               zIndex="15"
               borderColor="teal"
-              borderSize="1px"
               borderStyle="solid"
             >
               <SearchOptionsContainer>
