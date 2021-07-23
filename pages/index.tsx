@@ -17,7 +17,7 @@ import { useAsync, useAsyncFn } from "react-use";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import RenderClocks from "../components/RenderClocks";
+import dynamic from "next/dynamic";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -29,6 +29,10 @@ import { IoIosPin, IoIosSearch, IoIosHelpCircle } from "react-icons/io";
 import handleInputEvents from "../helpers/handleInputEvents";
 import RenderHelpBlock from "../helpers/renderHelpBlock";
 import TZGet from "../logoImage/TZGet.png";
+
+const RenderClocks = dynamic(() => import("../components/RenderClocks"), {
+  ssr: false,
+});
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -167,9 +171,9 @@ const IndexPage = () => {
           w="100%"
           borderRadius="0"
           bg="transparent"
-          _hover={{ bg: "#DFDFDF" }}
+          _hover={{ bg: "gray.100" }}
           justifyContent="left"
-          _focus={{ bg: "#DFDFDF" }}
+          _focus={{ bg: "gray.100" }}
           onKeyDown={onKeyDown}
           onKeyDownCapture={(e) => {
             e.preventDefault();
@@ -186,17 +190,11 @@ const IndexPage = () => {
       <Flex ref={ref} w="80%" alignItems="center">
         <Box w="40%">
           <Flex
-            // w="20vw"
             w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
             h={["60%", "70%", "80%", "90%", "100%"]}
-            border="1px solid black"
-            borderRadius="10px"
-            _focusWithin={{ boxShadow: "0.5px 0.5px 0.5px gray" }}
           >
             <InputGroup h="100%">
               <Input
-                alignSelf="center"
-                variant="outline"
                 ref={search}
                 value={value}
                 onChange={handleInput}
@@ -204,8 +202,6 @@ const IndexPage = () => {
                 placeholder="Search for a city or country"
                 fontSize={["70%", "80%", "105%", "115%", "125%"]}
                 size="lg"
-                border="none"
-                _focus={{ outline: "none" }}
                 onKeyDown={(e) => handleInputEvents(e, firstSuggestion, data)}
               />
 
@@ -225,13 +221,15 @@ const IndexPage = () => {
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
           {status === "OK" && (
             <Flex
-              borderBottomRadius="10px"
+              borderBottomRadius="4px"
               bg="white"
               pos="absolute"
               w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
               mt="5px"
               zIndex="15"
-              boxShadow="0px 2px 5px gray"
+              borderColor="teal"
+              borderSize="1px"
+              borderStyle="solid"
             >
               <SearchOptionsContainer>
                 {renderSuggestions()}
@@ -287,12 +285,18 @@ const IndexPage = () => {
 
   return (
     <Center>
-      <Box w="65%" mt="2%" mr="2.5%" maxH="100%" minH="90vh">
-        <Flex justifyContent="space-between">
+      <Box
+        w="65%"
+        mt="2%"
+        mr="2.5%"
+        maxH="100%"
+        minH="90vh"
+        justifyContent="center"
+      >
+        <Flex justifyContent="center" direction="column">
+          <Heading>Hello</Heading>
+          <Text>ASDASD</Text>
           <PlacesAutocomplete />
-          <Box textAlign="left">
-            <Image src={TZGet.src} />
-          </Box>
         </Flex>
         <RenderClocks arr={clockStack} />
       </Box>
