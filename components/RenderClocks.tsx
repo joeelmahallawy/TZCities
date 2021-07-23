@@ -112,7 +112,7 @@ export default function RenderClocks({ arr }) {
           <SliderTrack height={8} overflow="auto">
             <SliderFilledTrack
               defaultValue={datetime.hour() + datetime.minute() / 60}
-              w={`${(datetime.hour() + datetime.minute() / 60) / 24}%`}
+              w={`${((datetime.hour() + datetime.minute() / 60) / 24) * 100}%`}
               // w="unset"
               // w="100%"
               // bg="red"
