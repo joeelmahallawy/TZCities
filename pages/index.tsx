@@ -8,12 +8,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  ListItem,
-  OrderedList,
-  Image,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
-import { useAsync, useAsyncFn } from "react-use";
+import React, { useRef, useState } from "react";
+import { useAsyncFn } from "react-use";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -28,7 +25,6 @@ import { FocusScope, useFocusManager } from "@react-aria/focus";
 import { IoIosPin, IoIosSearch, IoIosHelpCircle } from "react-icons/io";
 import handleInputEvents from "../helpers/handleInputEvents";
 import RenderHelpBlock from "../helpers/renderHelpBlock";
-import TZGet from "../logoImage/TZGet.png";
 
 const RenderClocks = dynamic(() => import("../components/RenderClocks"), {
   ssr: false,
@@ -104,7 +100,7 @@ const IndexPage = () => {
         return (
           <Box
             p={1}
-            w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
+            w="30vw"
             onClick={() => {
               handleSelect(suggestion);
             }}
@@ -126,10 +122,17 @@ const IndexPage = () => {
               ) : (
                 <IoIosPin size="25px" color="gray" />
               )}
-              <Heading fontSize="120%" ml="5px" mr="5px">
+              {/* FIXME:FIXME:FIXME: */}
+              <Heading
+                fontSize={["50%", "60%", "80%", "95%", "115%"]}
+                ml="5px"
+                mr="5px"
+              >
                 {main_text}
               </Heading>{" "}
-              <Text color="gray">{secondary_text}</Text>
+              <Text fontSize={["40%", "50%", "70%", "85%", "95%"]} color="gray">
+                {secondary_text}
+              </Text>
             </SearchOptions>
           </Box>
         );
@@ -171,9 +174,9 @@ const IndexPage = () => {
           w="100%"
           borderRadius="0"
           bg="transparent"
-          _hover={{ bg: "gray.100" }}
+          _hover={{ bg: "gray.300" }}
           justifyContent="left"
-          _focus={{ bg: "gray.100" }}
+          _focus={{ bg: "gray.300" }}
           onKeyDown={onKeyDown}
           onKeyDownCapture={(e) => {
             e.preventDefault();
@@ -185,16 +188,14 @@ const IndexPage = () => {
       );
     }
     // PLACES AUTOCOMPLETE
-
     return (
-      <Flex ref={ref} w="80%" alignItems="center">
-        <Box w="40%">
-          <Flex
-            w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
-            h={["60%", "70%", "80%", "90%", "100%"]}
-          >
-            <InputGroup h="100%">
+      <Flex ref={ref} w="100%" alignItems="center" justifyContent="center">
+        <Box mr={0} h={["30px", "35px", "40px", "45px", "55px"]}>
+          <Flex w="30vw" h="100%">
+            {/* FIXME:FIXME:FIXME: */}
+            <InputGroup>
               <Input
+                h="100%"
                 ref={search}
                 value={value}
                 onChange={handleInput}
@@ -221,10 +222,9 @@ const IndexPage = () => {
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
           {status === "OK" && (
             <Flex
-              borderBottomRadius="4px"
-              bg="white"
+              borderBottomRadius="6px"
+              bg="gray.100"
               pos="absolute"
-              w={["45vw", "42.5vw", "35vw", "27.5vw", "20vw"]}
               mt="5px"
               zIndex="15"
               borderColor="teal"
@@ -237,19 +237,8 @@ const IndexPage = () => {
             </Flex>
           )}
         </Box>
-        <Box
-          ml={["60%", "45%", "30%", "15%", "0%"]}
-          onMouseEnter={() => setShowHelp(true)}
-          onMouseLeave={() => setShowHelp(false)}
-        >
-          <Box _hover={{ cursor: "pointer" }}>
-            <IoIosHelpCircle
-              color="gray"
-              alignmentBaseline="central"
-              size="25px"
-            />
-          </Box>
-          {showHelp && <RenderHelpBlock />}
+        <Box ml={3}>
+          <RenderHelpBlock />
         </Box>
       </Flex>
     );
@@ -285,19 +274,21 @@ const IndexPage = () => {
 
   return (
     <Center>
-      <Box
-        w="65%"
-        mt="2%"
-        mr="2.5%"
-        maxH="100%"
-        minH="90vh"
-        justifyContent="center"
-      >
-        <Flex justifyContent="center" direction="column">
-          <Heading>Hello</Heading>
-          <Text>ASDASD</Text>
+      <Box w="65%" mt="2%" mr="2.5%">
+        <Box textAlign="center">
+          <Heading
+            mr={3}
+            fontFamily="serif"
+            fontSize={["2xl", "3xl", "4xl", "5xl", "6xl"]}
+          >
+            TZ Get
+          </Heading>
+          <Text mr={5} mb={3} fontSize={["50%", "60%", "80%", "95%", "115%"]}>
+            Calculate current and future times for countries all over the world!
+          </Text>
+
           <PlacesAutocomplete />
-        </Flex>
+        </Box>
         <RenderClocks arr={clockStack} />
       </Box>
     </Center>

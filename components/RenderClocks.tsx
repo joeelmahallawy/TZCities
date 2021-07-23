@@ -31,7 +31,7 @@ export default function RenderClocks({ arr }) {
     const datetime = dayjs().tz(country.zoneName);
 
     return (
-      <Box w="100%" key={i} alignItems="center" mt="2.25%">
+      <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={3}>
         <Flex alignItems="center" gridGap="1%" pb="1%">
           <Heading
             fontSize={["85%", "80%", "115%", "150%", "160%", "175%"]}
@@ -42,7 +42,6 @@ export default function RenderClocks({ arr }) {
           </Heading>
           <Heading
             fontWeight="300"
-            // fontSize={["100%", "130%", "145%", "160%", "170%", "175%"]}
             fontSize={["85%", "80%", "115%", "150%", "160%", "175%"]}
           >
             {delta !== null ? (
@@ -80,7 +79,7 @@ export default function RenderClocks({ arr }) {
           ) : (
             <Button
               ml="auto"
-              fontSize={["100%", "110%", "120%", "130%", "140%", "150%"]}
+              fontSize={["80%", "95%", "110%", "120%", "130%", "160%"]}
               size="xl"
               p="1%"
               _focus={{ outline: "none" }}
@@ -131,7 +130,7 @@ export default function RenderClocks({ arr }) {
           style={{
             width: "100%",
             height: "100%",
-            marginLeft: -5,
+            marginLeft: -7.5,
           }}
         >
           {Array.from(new Array(24)).map((step, index) => (
