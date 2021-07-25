@@ -246,7 +246,7 @@ const IndexPage = () => {
   const [, getTimezone] = useAsyncFn(async (lat, lng, city, placeID) => {
     localStorage.setItem(`${placeID}`, `${city}`);
     const response = await fetch(
-      `http://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
+      `https://api.timezonedb.com/v2.1/get-time-zone?key=HUTUZS1BO031&format=json&by=position&lat=${lat}&lng=${lng}`
     );
     const responseData = await response.json();
     responseData.city = city;
