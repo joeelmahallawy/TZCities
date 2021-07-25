@@ -94,6 +94,8 @@ export default function RenderClocks({ arr }) {
         </Flex>
 
         <Slider
+          tabIndex={-1}
+          focusThumbOnChange={false}
           aria-label="slider-ex-4"
           // defaultValue={datetime.hour() + datetime.minute() / 60}
           value={getSliderValue(datetime, delta)}
@@ -119,6 +121,7 @@ export default function RenderClocks({ arr }) {
             />
           </SliderTrack>
           <SliderThumb
+            _focus={{ outline: "none" }}
             boxSize={5}
             height={10}
             borderRadius={5}
