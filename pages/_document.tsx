@@ -11,8 +11,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>TZ Get</title>
-          <link rel="icon" type="image/png" href={`${IoIosClock}`}></link>
+          <title>TZ Cities</title>
         </Head>
         <body>
           <Main />
