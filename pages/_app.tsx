@@ -1,31 +1,37 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
-import { AppProps } from "next/app";
+import App from "next/app";
 import { useEffect } from "react";
 import ReactGA from "react-ga";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  const logPageView = () => {
+class MyApp extends App {
+  async componentDidMount() {
     if (process.env.NODE_ENV === "production") {
-      ReactGA.pageview(pageProps.router.asPath);
+      ReactGA.initialize("");
+      this.logPageView();
     }
-  };
+  }
 
-  useEffect(() => {
+  componentDidUpdate() {
+    this.logPageView();
+  }
+
+  logPageView() {
+    const { router } = this.props;
+
     if (process.env.NODE_ENV === "production") {
-      ReactGA.initialize("UA-203142465-1");
-      logPageView();
+      ReactGA.pageview(router.asPath);
     }
-  }, []);
+  }
 
-  useEffect(() => {
-    logPageView();
-  }, [pageProps, Component]);
+  render() {
+    const { Component, pageProps } = this.props;
 
-  return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  );
-};
+    return (
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    );
+  }
+}
 
 export default MyApp;
