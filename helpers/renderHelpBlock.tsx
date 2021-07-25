@@ -14,10 +14,8 @@ import {
   Button,
   PopoverArrow,
 } from "@chakra-ui/react";
-
 import React from "react";
 import { IoIosHelpCircle } from "react-icons/io";
-console.log(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
 export default function RenderHelpBlock() {
   const initRef = React.useRef();
   return (
