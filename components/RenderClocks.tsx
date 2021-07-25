@@ -8,7 +8,6 @@ import {
   SliderThumb,
   SliderTrack,
   Button,
-  Divider,
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -32,13 +31,15 @@ export default function RenderClocks({ arr }) {
     const datetime = dayjs().tz(country.zoneName);
 
     return (
-      <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={3}>
+      <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={7}>
         <Flex alignItems="center" gridGap="1%" pb="1%">
           <Heading
             fontSize={["45%", "70%", "115%", "150%", "160%", "175%"]}
             fontWeight="600"
           >
-            {country.city ? `${country.city}` : "Your current time"}
+            {country.city
+              ? `${country.city}, ${country.countryName}`
+              : "Your current time"}
             {country.nextAbbreviation && `(${country.nextAbbreviation})`}:{" "}
           </Heading>
           <Heading
@@ -89,7 +90,7 @@ export default function RenderClocks({ arr }) {
                 localStorage.setItem("timezoneStack", JSON.stringify(arr));
               }}
             >
-              Delete Time
+              Remove Time
             </Button>
           )}
         </Flex>
@@ -98,9 +99,7 @@ export default function RenderClocks({ arr }) {
           tabIndex={-1}
           focusThumbOnChange={false}
           aria-label="slider-ex-4"
-          // defaultValue={datetime.hour() + datetime.minute() / 60}
           value={getSliderValue(datetime, delta)}
-          // value={10}
           max={23.99}
           min={0}
           step={0.16666667} // (1/6) for 10 minutes intervals
@@ -112,22 +111,16 @@ export default function RenderClocks({ arr }) {
           }}
           height={12}
         >
-          <SliderTrack height={8} overflow="auto">
-            <SliderFilledTrack
-            // defaultValue={datetime.hour() + datetime.minute() / 60}
-            // w={`${((datetime.hour() + datetime.minute() / 60) / 24) * 100}%`}
-            // w="unset"
-            // w="100%"
-            // bg="red"
-            />
+          <SliderTrack height={[4, 5, 6, 7, 8]} overflow="auto">
+            <SliderFilledTrack />
           </SliderTrack>
           <SliderThumb
             _focus={{ outline: "none" }}
             boxSize={5}
-            height={10}
+            height={[8, 8, 8, 10, 10]}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px black"
-            // aria-valuenow={datetime.hour() + datetime.minute() / 60}
+            bg="white"
           ></SliderThumb>
         </Slider>
         <Flex
@@ -138,7 +131,6 @@ export default function RenderClocks({ arr }) {
           }}
         >
           {/* @ts-expect-error */}
-
           <RenderIntervals abbrev={"am"} />
           {/* @ts-expect-error */}
           <RenderIntervals abbrev={"pm"} />

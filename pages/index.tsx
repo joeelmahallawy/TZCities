@@ -190,7 +190,7 @@ const IndexPage = () => {
     return (
       <Flex ref={ref} w="100%" alignItems="center" justifyContent="center">
         <Box mr={0} h={["30px", "35px", "40px", "45px", "55px"]}>
-          <Flex w="30vw" h="100%">
+          <Flex w="33vw" h="100%">
             <InputGroup>
               <Input
                 h="100%"
@@ -273,7 +273,7 @@ const IndexPage = () => {
 
   return (
     <Center>
-      <Box w="70%" mt="2%" mr="2.5%">
+      <Box w="80%" mt="2%" mr="2.5%">
         <Box textAlign="center">
           <Heading
             mr={3}

@@ -12,7 +12,7 @@ export default function RenderIntervals({ abbrev }) {
         // fontSize={["20%", "20%", "50%", "65%", "80%"]}
         fontSize="14px"
       >
-        <Text fontSize={["30%", "35%", "55%", "75%", "100%", "150%"]}>{`${
+        <Text fontSize={["45%", "40%", "65%", "85%", "100%"]}>{`${
           index === 0 ? index + 12 : index
         }${abbrev}`}</Text>
       </Flex>
