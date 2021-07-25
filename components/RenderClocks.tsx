@@ -111,13 +111,14 @@ export default function RenderClocks({ arr }) {
           }}
           height={12}
         >
-          <SliderTrack height={[4, 5, 6, 7, 8]} overflow="auto">
+          <SliderTrack height={8} overflow="auto">
             <SliderFilledTrack />
           </SliderTrack>
           <SliderThumb
             _focus={{ outline: "none" }}
             boxSize={5}
-            height={[8, 8, 8, 10, 10]}
+            height={10}
+            width={[3, 4, 4, 5, 5]}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px black"
             bg="white"
