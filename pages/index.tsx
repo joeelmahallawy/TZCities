@@ -198,7 +198,7 @@ const IndexPage = () => {
                 value={value}
                 onChange={handleInput}
                 disabled={!ready}
-                placeholder="Search for a city or country"
+                placeholder="Search for a city"
                 fontSize={["70%", "80%", "105%", "115%", "125%"]}
                 size="lg"
                 onKeyDown={(e) => handleInputEvents(e, firstSuggestion, data)}
@@ -273,17 +273,17 @@ const IndexPage = () => {
 
   return (
     <Center>
-      <Box w="65%" mt="2%" mr="2.5%">
+      <Box w="70%" mt="2%" mr="2.5%">
         <Box textAlign="center">
           <Heading
             mr={3}
             fontFamily="serif"
             fontSize={["2xl", "3xl", "4xl", "5xl", "6xl"]}
           >
-            TZ Get
+            TZ Cities
           </Heading>
-          <Text mr={5} mb={3} fontSize={["50%", "60%", "80%", "95%", "115%"]}>
-            Calculate current and future times for countries all over the world!
+          <Text mr={5} mb={3} fontSize={["50%", "40%", "80%", "95%", "115%"]}>
+            Compare timezones for cities all over the world!
           </Text>
 
           <PlacesAutocomplete />

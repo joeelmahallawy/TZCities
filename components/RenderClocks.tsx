@@ -18,6 +18,7 @@ import Clock from "react-live-clock";
 import { useLocalStorage, useUpdate } from "react-use";
 import { useState } from "react";
 import getSliderValue from "../helpers/getSliderValue";
+import RenderIntervals from "../helpers/renderIntervals";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -100,7 +101,7 @@ export default function RenderClocks({ arr }) {
           // defaultValue={datetime.hour() + datetime.minute() / 60}
           value={getSliderValue(datetime, delta)}
           // value={10}
-          max={24}
+          max={23.99}
           min={0}
           step={0.16666667} // (1/6) for 10 minutes intervals
           ref={slider}
@@ -125,7 +126,7 @@ export default function RenderClocks({ arr }) {
             boxSize={5}
             height={10}
             borderRadius={5}
-            boxShadow="0.5px 0.5px 0.5px 0.5px gray"
+            boxShadow="0.5px 0.5px 0.5px 0.5px black"
             // aria-valuenow={datetime.hour() + datetime.minute() / 60}
           ></SliderThumb>
         </Slider>
@@ -136,17 +137,11 @@ export default function RenderClocks({ arr }) {
             marginLeft: -7.5,
           }}
         >
-          {Array.from(new Array(24)).map((step, index) => (
-            <Flex
-              key={index}
-              style={{
-                width: `${100 / 24}%`,
-              }}
-              fontSize={["50%", "65%", "75%", "100%", "100%"]}
-            >
-              {index}
-            </Flex>
-          ))}
+          {/* @ts-expect-error */}
+
+          <RenderIntervals abbrev={"am"} />
+          {/* @ts-expect-error */}
+          <RenderIntervals abbrev={"pm"} />
         </Flex>
       </Box>
     );
