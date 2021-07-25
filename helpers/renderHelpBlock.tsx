@@ -36,11 +36,11 @@ export default function RenderHelpBlock() {
         </Box>
       </PopoverTrigger>
       <Portal>
-        <PopoverContent w="35vw">
+        <PopoverContent w="100%">
           <PopoverHeader>
             <Heading
               textAlign="center"
-              fontSize={["120%", "140%", "165%", "165%", "225%"]}
+              fontSize={["100%", "120%", "135%", "145%", "205%"]}
             >
               How to use:
             </Heading>

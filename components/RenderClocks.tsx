@@ -35,7 +35,7 @@ export default function RenderClocks({ arr }) {
       <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={3}>
         <Flex alignItems="center" gridGap="1%" pb="1%">
           <Heading
-            fontSize={["85%", "80%", "115%", "150%", "160%", "175%"]}
+            fontSize={["45%", "70%", "115%", "150%", "160%", "175%"]}
             fontWeight="600"
           >
             {country.city ? `${country.city}` : "Your current time"}
@@ -43,7 +43,7 @@ export default function RenderClocks({ arr }) {
           </Heading>
           <Heading
             fontWeight="300"
-            fontSize={["85%", "80%", "115%", "150%", "160%", "175%"]}
+            fontSize={["45%", "70%", "115%", "150%", "160%", "175%"]}
           >
             {delta !== null ? (
               <Clock
