@@ -6,7 +6,7 @@ import ReactGA from "react-ga";
 class MyApp extends App {
   async componentDidMount() {
     if (process.env.NODE_ENV === "production") {
-      ReactGA.initialize("");
+      ReactGA.initialize("UA-203142465-1");
       this.logPageView();
     }
   }
