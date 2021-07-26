@@ -9,6 +9,7 @@ import {
   SliderTrack,
   Button,
 } from "@chakra-ui/react";
+import { BiDownvote } from "react-icons/bi";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -34,7 +35,7 @@ export default function RenderClocks({ arr }) {
       <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={7}>
         <Flex alignItems="center" gridGap="1%" pb="1%">
           <Heading
-            fontSize={["45%", "70%", "115%", "150%", "160%", "175%"]}
+            fontSize={["60%", "80%", "115%", "150%", "160%", "175%"]}
             fontWeight="600"
           >
             {country.city
@@ -114,6 +115,7 @@ export default function RenderClocks({ arr }) {
           <SliderTrack height={8} overflow="auto">
             <SliderFilledTrack />
           </SliderTrack>
+
           <SliderThumb
             _focus={{ outline: "none" }}
             boxSize={5}
@@ -121,7 +123,7 @@ export default function RenderClocks({ arr }) {
             width={[3, 4, 4, 5, 5]}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px black"
-            bg="white"
+            bg="gray.100"
           ></SliderThumb>
         </Slider>
         <Flex
