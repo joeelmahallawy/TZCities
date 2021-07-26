@@ -112,7 +112,7 @@ export default function RenderClocks({ arr }) {
           }}
           height={12}
         >
-          <SliderTrack height={8} overflow="auto">
+          <SliderTrack height={8} overflow="auto" bg="gray.100">
             <SliderFilledTrack />
           </SliderTrack>
 
@@ -123,15 +123,15 @@ export default function RenderClocks({ arr }) {
             width={[3, 4, 4, 5, 5]}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px black"
-            bg="gray.100"
+            bg="gray.200"
           ></SliderThumb>
         </Slider>
         <Flex
           style={{
             width: "100%",
             height: "100%",
-            marginLeft: -7.5,
           }}
+          ml={[-3, -7.5, -7.5, -7.5, -7.5]}
         >
           {/* @ts-expect-error */}
           <RenderIntervals abbrev={"am"} />
