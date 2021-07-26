@@ -131,7 +131,7 @@ export default function RenderClocks({ arr }) {
             width: "100%",
             height: "100%",
           }}
-          ml={[-3, -7.5, -7.5, -7.5, -7.5]}
+          ml={[0, -7.5, -7.5, -7.5, -7.5]}
         >
           {/* @ts-expect-error */}
           <RenderIntervals abbrev={"am"} />

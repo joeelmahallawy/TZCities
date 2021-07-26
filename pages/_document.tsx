@@ -1,4 +1,7 @@
+import { layout } from "@chakra-ui/react";
+import title from "next/head";
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import React from "react";
 import { IoIosClock } from "react-icons/io";
 
 class MyDocument extends Document {

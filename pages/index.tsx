@@ -272,7 +272,7 @@ const IndexPage = () => {
   }
 
   return (
-    <Center>
+    <Center overflowX="hidden" maxW="100%">
       <Box w="75%" mt="2%" mr="2.5%">
         <Box textAlign="center">
           <Heading
