@@ -35,7 +35,7 @@ export default function RenderClocks({ arr }) {
       <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={7}>
         <Flex alignItems="center" gridGap="1%" pb="1%">
           <Heading
-            fontSize={["60%", "80%", "115%", "150%", "160%", "175%"]}
+            fontSize={["60%", "75%", "115%", "150%", "160%", "175%"]}
             fontWeight="600"
           >
             {country.city
@@ -45,7 +45,7 @@ export default function RenderClocks({ arr }) {
           </Heading>
           <Heading
             fontWeight="300"
-            fontSize={["45%", "70%", "115%", "150%", "160%", "175%"]}
+            fontSize={["50%", "80%", "115%", "150%", "160%", "200%"]}
           >
             {delta !== null ? (
               <Clock
@@ -68,10 +68,11 @@ export default function RenderClocks({ arr }) {
           </Heading>
           {i === 0 ? (
             <Button
+              p={[3, 3, 5, 6, 7]}
+              fontSize={["xs", "md", "lg", "lg", "xl"]}
+              size="md"
               ml="auto"
-              fontSize={["80%", "95%", "110%", "120%", "130%", "160%"]}
-              size="xl"
-              p="1.25%"
+              variant="solid"
               _focus={{ outline: "none" }}
               onClick={() => {
                 setDelta(null);
@@ -81,11 +82,14 @@ export default function RenderClocks({ arr }) {
             </Button>
           ) : (
             <Button
+              size="md"
               ml="auto"
-              fontSize={["80%", "95%", "110%", "120%", "130%", "160%"]}
-              size="xl"
-              p="1%"
+              p={[3, 3, 5, 6, 7]}
+              fontSize={["xs", "md", "lg", "lg", "xl"]}
+              variant="outline"
+              _hover={{ bg: "red.100" }}
               _focus={{ outline: "none" }}
+              colorScheme="red"
               onClick={() => {
                 arr.splice(i, 1);
                 localStorage.setItem("timezoneStack", JSON.stringify(arr));
@@ -131,7 +135,7 @@ export default function RenderClocks({ arr }) {
             width: "100%",
             height: "100%",
           }}
-          ml={[0, -7.5, -7.5, -7.5, -7.5]}
+          ml={[-1, -7.5, -7.5, -7.5, -3]}
         >
           {/* @ts-expect-error */}
           <RenderIntervals abbrev={"am"} />

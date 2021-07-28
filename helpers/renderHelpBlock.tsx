@@ -27,7 +27,7 @@ export default function RenderHelpBlock() {
       trigger="hover"
     >
       <PopoverTrigger>
-        <Box _hover={{ cursor: "pointer" }}>
+        <Box _hover={{ cursor: "pointer" }} _active={{ outline: "none" }}>
           <IoIosHelpCircle
             color="gray"
             alignmentBaseline="central"
@@ -36,31 +36,20 @@ export default function RenderHelpBlock() {
         </Box>
       </PopoverTrigger>
       <Portal>
-        <PopoverContent w="100%">
+        <PopoverContent w={["90%", "100%", "100%", "100%", "100%"]}>
           <PopoverHeader>
-            <Heading
-              textAlign="center"
-              fontSize={["100%", "120%", "135%", "145%", "205%"]}
-            >
-              How to use:
-            </Heading>
+            <Heading size="md">How to use</Heading>
           </PopoverHeader>
-          <PopoverCloseButton />
           <PopoverBody>
-            <Box textAlign="left" overflowY="auto" p={1}>
-              <OrderedList fontSize={["80%", "90%", "105%", "130%", "120%"]}>
-                <ListItem> Search for a city or country</ListItem>
-                <ListItem> Get timezone</ListItem>
+            <Box textAlign="left" overflowY="auto" p={3}>
+              <OrderedList>
+                <ListItem>Search for a city</ListItem>
+                <ListItem>Get city's timezone</ListItem>
                 <ListItem>
-                  Drag the first slider to change your current location's time{" "}
+                  Move any slider to synchronously change all of the location's
+                  time{" "}
                 </ListItem>
-                <ListItem>
-                  Manipulate your current location's time to see times in other
-                  locations
-                </ListItem>
-                <ListItem>
-                  Drag other timezones to see how it compares to yours!
-                </ListItem>
+                <ListItem>Add as many cities as you want!</ListItem>
               </OrderedList>
             </Box>
           </PopoverBody>

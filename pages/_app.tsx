@@ -1,7 +1,10 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import App from "next/app";
 import { useEffect } from "react";
+import Head from "next/head";
 import ReactGA from "react-ga";
+import { DefaultSeo } from "next-seo";
+import { createSEOConfig } from "../utils/seoMeta";
 
 class MyApp extends App {
   async componentDidMount() {
@@ -27,9 +30,15 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <ChakraProvider theme={theme}>
+          <DefaultSeo {...createSEOConfig()} />
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </>
     );
   }
 }

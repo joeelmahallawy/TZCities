@@ -25,6 +25,8 @@ import { FocusScope, useFocusManager } from "@react-aria/focus";
 import { IoIosPin, IoIosSearch, IoIosHelpCircle } from "react-icons/io";
 import handleInputEvents from "../helpers/handleInputEvents";
 import RenderHelpBlock from "../helpers/renderHelpBlock";
+import { NextSeo } from "next-seo";
+import { createSEOConfig } from "../utils/seoMeta";
 
 const RenderClocks = dynamic(() => import("../components/RenderClocks"), {
   ssr: false,
@@ -37,7 +39,6 @@ const IndexPage = () => {
   const firstSuggestion = useRef();
   const search = useRef();
   const [clockStack, setClockStack] = useState(timezoneStackSetter);
-  const [showHelp, setShowHelp] = useState(false);
 
   function timezoneStackSetter() {
     return typeof window !== "undefined" &&
@@ -99,8 +100,9 @@ const IndexPage = () => {
         if (!localStorage.getItem(`${place_id}`)) previouslySearched = false;
         return (
           <Box
-            p={1}
-            w="30vw"
+            // p={[0, 0.5, 1, 1, 1]}
+
+            w={["60vw", "42.5vw", "35vw", "35vw", "25vw"]}
             onClick={() => {
               handleSelect(suggestion);
             }}
@@ -123,7 +125,7 @@ const IndexPage = () => {
                 <IoIosPin size="25px" color="gray" />
               )}
               <Heading
-                fontSize={["50%", "60%", "80%", "95%", "115%"]}
+                fontSize={["47.5%", "62.5%", "80%", "95%", "115%"]}
                 ml="5px"
                 mr="5px"
               >
@@ -169,13 +171,16 @@ const IndexPage = () => {
 
       return (
         <Button
-          p="0%"
+          // p="0%"
+          // p={[0, 0.5, 1, 1, 1]}
+          pt="4%"
+          pb="4%"
           w="100%"
           borderRadius="0"
           bg="transparent"
-          _hover={{ bg: "gray.300" }}
+          _hover={{ bg: "#eeeeee" }}
           justifyContent="left"
-          _focus={{ bg: "gray.300" }}
+          _focus={{ bg: "#eeeeee" }}
           onKeyDown={onKeyDown}
           onKeyDownCapture={(e) => {
             e.preventDefault();
@@ -190,7 +195,7 @@ const IndexPage = () => {
     return (
       <Flex ref={ref} w="100%" alignItems="center" justifyContent="center">
         <Box mr={0} h={["30px", "35px", "40px", "45px", "55px"]}>
-          <Flex w="33vw" h="100%">
+          <Flex w={["60vw", "42.5vw", "35vw", "35vw", "25vw"]} h="100%">
             <InputGroup>
               <Input
                 h="100%"
@@ -208,7 +213,7 @@ const IndexPage = () => {
                 h="100%"
                 children={
                   <IoIosSearch
-                    size="90%"
+                    size="25px"
                     // @ts-expect-error
                     onClick={() => search.current?.focus()}
                   />
@@ -221,9 +226,10 @@ const IndexPage = () => {
           {status === "OK" && (
             <Flex
               borderBottomRadius="6px"
-              bg="gray.100"
-              // bg="red"
-              boxShadow="0.5px 0.5px 0.5px gray"
+              // bg="gray.100"
+              bg="white"
+              // boxShadow="0.5px 0.5px 0.5px gray"
+              boxShadow="lg"
               pos="absolute"
               mt="5px"
               zIndex="15"
@@ -273,7 +279,8 @@ const IndexPage = () => {
 
   return (
     <Center overflowX="hidden" maxW="100%">
-      <Box w="75%" mt="2%" mr="2.5%">
+      <NextSeo {...createSEOConfig()} />
+      <Box w={["85%", "82.5%", "82.5%", "80%", "77.5%"]} mt="2%" mr="2.5%">
         <Box textAlign="center">
           <Heading
             mr={3}
