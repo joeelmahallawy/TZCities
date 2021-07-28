@@ -101,8 +101,7 @@ const IndexPage = () => {
         return (
           <Box
             // p={[0, 0.5, 1, 1, 1]}
-
-            w={["60vw", "42.5vw", "35vw", "35vw", "25vw"]}
+            w={["50vw", "42.5vw", "35vw", "35vw", "27.5vw"]}
             onClick={() => {
               handleSelect(suggestion);
             }}
@@ -142,7 +141,7 @@ const IndexPage = () => {
     // SUGGESTION OPTIONS CONTAINER
     function SearchOptionsContainer(props) {
       return (
-        <Box role="toolbar" p="0">
+        <Box role="toolbar" pt={1}>
           <FocusScope>{props.children}</FocusScope>
         </Box>
       );
@@ -173,8 +172,8 @@ const IndexPage = () => {
         <Button
           // p="0%"
           // p={[0, 0.5, 1, 1, 1]}
-          pt="4%"
-          pb="4%"
+          alignItems="center"
+          // p={8}
           w="100%"
           borderRadius="0"
           bg="transparent"
@@ -195,7 +194,7 @@ const IndexPage = () => {
     return (
       <Flex ref={ref} w="100%" alignItems="center" justifyContent="center">
         <Box mr={0} h={["30px", "35px", "40px", "45px", "55px"]}>
-          <Flex w={["60vw", "42.5vw", "35vw", "35vw", "25vw"]} h="100%">
+          <Flex w={["50vw", "42.5vw", "35vw", "35vw", "27.5vw"]} h="100%">
             <InputGroup>
               <Input
                 h="100%"

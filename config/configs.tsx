@@ -1,8 +1,9 @@
-import image from "../logoImage/clock-for-website.jpeg";
+import image from "../logoImage/TZ_Logo_pic.jpeg";
 const config = {
   author: "Youssef El Mahallawy",
-  siteName: "tzcities",
-  siteDescription: "Timezone difference calculator",
+  siteName: "TZ Cities",
+  siteDescription:
+    "Compare the time of several different cities all over the world with synchronous changes",
   defaultPageTitle: "TZ Cities",
   blogTitle: "Calculator",
   baseUrl: "tzcities.vercel.app",

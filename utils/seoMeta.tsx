@@ -21,7 +21,7 @@ const getImage = (data: DataType = {}) => {
   if (data.slug) {
     return [
       {
-        url: `/api/blog-image/${data.slug}`,
+        url: `/${data.slug}`,
         width: 600,
         height: 300,
         alt: data.title,

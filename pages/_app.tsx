@@ -1,6 +1,5 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import App from "next/app";
-import { useEffect } from "react";
 import Head from "next/head";
 import ReactGA from "react-ga";
 import { DefaultSeo } from "next-seo";
@@ -36,6 +35,7 @@ class MyApp extends App {
         </Head>
         <ChakraProvider theme={theme}>
           <DefaultSeo {...createSEOConfig()} />
+
           <Component {...pageProps} />
         </ChakraProvider>
       </>

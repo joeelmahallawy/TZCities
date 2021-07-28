@@ -73,6 +73,7 @@ export default function RenderClocks({ arr }) {
               size="md"
               ml="auto"
               variant="solid"
+              alignItems="center"
               _focus={{ outline: "none" }}
               onClick={() => {
                 setDelta(null);

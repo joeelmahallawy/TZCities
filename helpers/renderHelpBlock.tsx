@@ -38,18 +38,20 @@ export default function RenderHelpBlock() {
       <Portal>
         <PopoverContent w={["90%", "100%", "100%", "100%", "100%"]}>
           <PopoverHeader>
-            <Heading size="md">How to use</Heading>
+            <Heading fontSize="150%">How to use</Heading>
           </PopoverHeader>
           <PopoverBody>
-            <Box textAlign="left" overflowY="auto" p={3}>
+            <Box textAlign="left" overflowY="auto" p={2} pb={5}>
               <OrderedList>
-                <ListItem>Search for a city</ListItem>
-                <ListItem>Get city's timezone</ListItem>
-                <ListItem>
+                <ListItem fontSize="lg">Search for a city</ListItem>
+                <ListItem fontSize="lg">Get city's timezone</ListItem>
+                <ListItem fontSize="lg">
                   Move any slider to synchronously change all of the location's
                   time{" "}
                 </ListItem>
-                <ListItem>Add as many cities as you want!</ListItem>
+                <ListItem fontSize="lg">
+                  Add as many cities as you want!
+                </ListItem>
               </OrderedList>
             </Box>
           </PopoverBody>
