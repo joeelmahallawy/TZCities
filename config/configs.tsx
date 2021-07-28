@@ -1,4 +1,4 @@
-import image from "../logoImage/TZ_Logo_pic.jpeg";
+import image from "../logoImage/final_tz_cities_pic.jpeg";
 const config = {
   author: "Youssef El Mahallawy",
   siteName: "TZ Cities",
