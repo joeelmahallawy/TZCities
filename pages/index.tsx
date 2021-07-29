@@ -100,8 +100,7 @@ const IndexPage = () => {
         if (!localStorage.getItem(`${place_id}`)) previouslySearched = false;
         return (
           <Box
-            // p={[0, 0.5, 1, 1, 1]}
-            w={["50vw", "42.5vw", "35vw", "35vw", "27.5vw"]}
+            w={["60vw", "42.5vw", "35vw", "35vw", "27.5vw"]}
             onClick={() => {
               handleSelect(suggestion);
             }}
@@ -194,7 +193,7 @@ const IndexPage = () => {
     return (
       <Flex ref={ref} w="100%" alignItems="center" justifyContent="center">
         <Box mr={0} h={["30px", "35px", "40px", "45px", "55px"]}>
-          <Flex w={["50vw", "42.5vw", "35vw", "35vw", "27.5vw"]} h="100%">
+          <Flex w={["60vw", "42.5vw", "35vw", "35vw", "27.5vw"]} h="100%">
             <InputGroup>
               <Input
                 h="100%"
