@@ -31,7 +31,10 @@ class MyApp extends App {
     return (
       <>
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=2.0"
+          />
         </Head>
         <ChakraProvider theme={theme}>
           <DefaultSeo {...createSEOConfig()} />

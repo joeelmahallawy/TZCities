@@ -3,8 +3,8 @@ import title from "next/head";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import React from "react";
 // import { IoIosClock } from "react-icons/io";
-import config from "../config/configs";
-import apple from "../icons/favicon.ico";
+// import config from "../config/configs";
+// import apple from "/icons/favicon.ico";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -17,15 +17,20 @@ class MyDocument extends Document {
       <Html>
         <Head>
           {/* <title> */}
-          <link
+          {/* <link
             rel="icon"
-            // sizes="152x152"
+
 
             href={apple.src}
             type="image/png"
-          />
+          /> */}
 
-          {/* <link rel="icon" href="/icons/favicons.io" type="image/x-icon"></link> */}
+          <link
+            rel="icon"
+            sizes="16x16"
+            href="/icons/favicon.ico"
+            // type="image/x-icon"
+          ></link>
         </Head>
         <body>
           <Main />

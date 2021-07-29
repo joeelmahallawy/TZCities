@@ -69,7 +69,7 @@ export default function RenderClocks({ arr }) {
           {i === 0 ? (
             <Button
               p={[3, 3, 5, 6, 7]}
-              fontSize={["xs", "md", "lg", "lg", "xl"]}
+              fontSize={["xs", "sm", "lg", "lg", "xl"]}
               size="md"
               ml="auto"
               variant="solid"
@@ -86,7 +86,7 @@ export default function RenderClocks({ arr }) {
               size="md"
               ml="auto"
               p={[3, 3, 5, 6, 7]}
-              fontSize={["xs", "md", "lg", "lg", "xl"]}
+              fontSize={["xs", "sm", "lg", "lg", "xl"]}
               variant="outline"
               _hover={{ bg: "red.100" }}
               _focus={{ outline: "none" }}
@@ -117,14 +117,14 @@ export default function RenderClocks({ arr }) {
           }}
           height={12}
         >
-          <SliderTrack height={8} overflow="auto" bg="gray.100">
+          <SliderTrack height={10} overflow="auto" bg="gray.100">
             <SliderFilledTrack />
           </SliderTrack>
 
           <SliderThumb
             _focus={{ outline: "none" }}
             boxSize={5}
-            height={10}
+            height={12}
             width={[3, 4, 4, 5, 5]}
             borderRadius={5}
             boxShadow="0.5px 0.5px 0.5px 0.5px black"
