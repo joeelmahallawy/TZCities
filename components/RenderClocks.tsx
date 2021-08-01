@@ -34,70 +34,77 @@ export default function RenderClocks({ arr }) {
     return (
       <Box w="100%" key={i} alignItems="center" mt="2.25%" pb={7}>
         <Flex alignItems="center" gridGap="1%" pb="1%">
-          <Heading
-            fontSize={["60%", "75%", "115%", "150%", "160%", "175%"]}
-            fontWeight="600"
-          >
-            {country.city
-              ? `${country.city}, ${country.countryName}`
-              : "Your current time"}
-            {country.nextAbbreviation && `(${country.nextAbbreviation})`}:{" "}
-          </Heading>
-          <Heading
-            fontWeight="300"
-            fontSize={["50%", "80%", "115%", "150%", "160%", "200%"]}
-          >
-            {delta !== null ? (
-              <Clock
-                date={`${datetime
-                  .hour(getSliderValue(datetime, delta))
-                  .minute((delta - Math.floor(delta)) * 60)}`}
-                ticking={true}
-                format={"h:mm:ss a"}
-                timezone={country.zoneName}
-                onChange={() => update()}
-              />
-            ) : (
-              <Clock
-                ticking={true}
-                format={"h:mm:ss a"}
-                timezone={country.zoneName}
-                onChange={() => update()}
-              />
-            )}
-          </Heading>
+          <Box>
+            <Heading
+              fontSize={["60%", "75%", "115%", "150%", "160%", "175%"]}
+              fontWeight="600"
+            >
+              {country.city
+                ? `${country.city}, ${country.countryName}`
+                : "Your current time"}
+              {country.nextAbbreviation && `(${country.nextAbbreviation})`}:{" "}
+            </Heading>
+          </Box>
+          <Box>
+            <Heading
+              fontWeight="300"
+              fontSize={["50%", "80%", "115%", "150%", "160%", "200%"]}
+            >
+              {delta !== null ? (
+                <Clock
+                  date={`${datetime
+                    .hour(getSliderValue(datetime, delta))
+                    .minute((delta - Math.floor(delta)) * 60)}`}
+                  ticking={true}
+                  format={"h:mm:ss a"}
+                  timezone={country.zoneName}
+                  onChange={() => update()}
+                />
+              ) : (
+                <Clock
+                  ticking={true}
+                  format={"h:mm:ss a"}
+                  timezone={country.zoneName}
+                  onChange={() => update()}
+                />
+              )}
+            </Heading>
+          </Box>
+
           {i === 0 ? (
-            <Button
-              p={[3, 3, 5, 6, 7]}
-              fontSize={["xs", "sm", "lg", "lg", "xl"]}
-              size="md"
-              ml="auto"
-              variant="solid"
-              alignItems="center"
-              _focus={{ outline: "none" }}
-              onClick={() => {
-                setDelta(null);
-              }}
-            >
-              Get Current Time
-            </Button>
+            <Box ml="auto">
+              <Button
+                p={[3, 3, 5, 6, 7]}
+                fontSize={["xs", "sm", "lg", "lg", "xl"]}
+                size="md"
+                variant="solid"
+                alignItems="center"
+                _focus={{ outline: "none" }}
+                onClick={() => {
+                  setDelta(null);
+                }}
+              >
+                Get Current Time
+              </Button>
+            </Box>
           ) : (
-            <Button
-              size="md"
-              ml="auto"
-              p={[3, 3, 5, 6, 7]}
-              fontSize={["xs", "sm", "lg", "lg", "xl"]}
-              variant="outline"
-              _hover={{ bg: "red.100" }}
-              _focus={{ outline: "none" }}
-              colorScheme="red"
-              onClick={() => {
-                arr.splice(i, 1);
-                localStorage.setItem("timezoneStack", JSON.stringify(arr));
-              }}
-            >
-              Remove Time
-            </Button>
+            <Box ml="auto">
+              <Button
+                size="md"
+                p={[3, 3, 5, 6, 7]}
+                fontSize={["xs", "sm", "lg", "lg", "xl"]}
+                variant="outline"
+                _hover={{ bg: "red.100" }}
+                _focus={{ outline: "none" }}
+                colorScheme="red"
+                onClick={() => {
+                  arr.splice(i, 1);
+                  localStorage.setItem("timezoneStack", JSON.stringify(arr));
+                }}
+              >
+                Remove Time
+              </Button>
+            </Box>
           )}
         </Flex>
 

@@ -30,14 +30,15 @@ class MyDocument extends Document {
             sizes="16x16"
             href="/icons/favicon.ico"
             // type="image/x-icon"
-          ></link>
+          />
+          <meta name="viewport" content="width=device-width" />
         </Head>
         <body>
           <Main />
           <NextScript />
           <script
             src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
-          ></script>
+          />
         </body>
       </Html>
     );
