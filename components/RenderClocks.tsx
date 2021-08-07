@@ -18,7 +18,7 @@ import Clock from "react-live-clock";
 import { useLocalStorage, useUpdate } from "react-use";
 import { useState } from "react";
 import getSliderValue from "../helpers/getSliderValue";
-import RenderIntervals from "../helpers/renderIntervals";
+import RenderIntervals from "./renderIntervals";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 

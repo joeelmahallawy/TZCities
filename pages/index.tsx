@@ -22,11 +22,20 @@ import usePlacesAutocomplete, {
 import { AiOutlineClockCircle } from "react-icons/ai";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { FocusScope, useFocusManager } from "@react-aria/focus";
-import { IoIosPin, IoIosSearch, IoIosHelpCircle } from "react-icons/io";
+import {
+  IoIosPin,
+  IoIosSearch,
+  IoIosHelpCircle,
+  IoMdRefreshCircle,
+} from "react-icons/io";
 import handleInputEvents from "../helpers/handleInputEvents";
-import RenderHelpBlock from "../helpers/renderHelpBlock";
+import RenderHelpBlock from "../components/renderHelpBlock";
 import { NextSeo } from "next-seo";
 import { createSEOConfig } from "../utils/seoMeta";
+import timezoneStackSetter from "../helpers/timezoneStackSetter";
+import refreshTimezone from "../helpers/refreshTimezone";
+import renderRefreshBtn from "../components/renderRefreshBtn";
+import RenderRefreshBtn from "../components/renderRefreshBtn";
 
 const RenderClocks = dynamic(() => import("../components/RenderClocks"), {
   ssr: false,
@@ -41,13 +50,6 @@ const IndexPage = () => {
   const firstSuggestion = useRef();
   const search = useRef();
   const [clockStack, setClockStack] = useState(timezoneStackSetter);
-
-  function timezoneStackSetter() {
-    return typeof window !== "undefined" &&
-      localStorage.getItem("timezoneStack")
-      ? JSON.parse(localStorage.getItem("timezoneStack"))
-      : [{ countryName: "Your current time", zoneName: dayjs.tz.guess() }];
-  }
 
   // BEGINNING OF AUTOCOMPLETE
   // FIXME:FIXME:FIXME:
@@ -243,9 +245,26 @@ const IndexPage = () => {
             </Flex>
           )}
         </Box>
-        <Box ml={3}>
+        <Flex ml={3}>
           <RenderHelpBlock />
-        </Box>
+          {/* <Center _hover={{ cursor: "pointer" }} ml={1}>
+            <IoMdRefreshCircle
+              size="25px"
+              onClick={() => {
+                refreshTimezone();
+                setClockStack(timezoneStackSetter);
+              }}
+            />
+          </Center> */}
+
+          <Center
+            _hover={{ cursor: "pointer" }}
+            ml={1}
+            onClick={() => setClockStack(timezoneStackSetter)}
+          >
+            <RenderRefreshBtn />
+          </Center>
+        </Flex>
       </Flex>
     );
   };

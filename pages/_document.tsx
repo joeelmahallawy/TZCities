@@ -31,7 +31,6 @@ class MyDocument extends Document {
             href="/icons/favicon.ico"
             // type="image/x-icon"
           />
-          <meta name="viewport" content="width=device-width" />
         </Head>
         <body>
           <Main />
