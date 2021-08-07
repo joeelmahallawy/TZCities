@@ -28,7 +28,13 @@ export default function RenderRefreshBtn() {
       trigger="hover"
     >
       <PopoverTrigger>
-        <Button size="0" bg="transparent" _hover={{ bg: "transparent" }}>
+        <Button
+          size="0"
+          bg="transparent"
+          _hover={{ bg: "transparent" }}
+          _active={{ bg: "transparent" }}
+          _focus={{ outline: "none" }}
+        >
           <IoMdRefreshCircle
             size="25px"
             onClick={() => {
