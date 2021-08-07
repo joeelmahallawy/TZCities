@@ -34,6 +34,8 @@ const RenderClocks = dynamic(() => import("../components/RenderClocks"), {
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+// console.log(dayjs.extend());
+// console.log();
 
 const IndexPage = () => {
   const firstSuggestion = useRef();
@@ -48,6 +50,7 @@ const IndexPage = () => {
   }
 
   // BEGINNING OF AUTOCOMPLETE
+  // FIXME:FIXME:FIXME:
   const PlacesAutocomplete = () => {
     const {
       ready,
