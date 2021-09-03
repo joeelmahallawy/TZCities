@@ -74,9 +74,9 @@ export default function RenderClocks({ arr }) {
           {i === 0 ? (
             <Box ml="auto">
               <Button
-                p={[3, 3, 5, 6, 7]}
+                p={[2, 3, 5, 6, 7]}
                 fontSize={["xs", "sm", "lg", "lg", "xl"]}
-                size="sm"
+                size="md"
                 variant="solid"
                 alignItems="center"
                 _focus={{ outline: "none" }}
@@ -90,9 +90,9 @@ export default function RenderClocks({ arr }) {
           ) : (
             <Box ml="auto">
               <Button
-                size="sm"
+                size="md"
                 // bg="red"
-                p={[3, 3, 5, 6, 7]}
+                p={[2, 3, 5, 6, 7]}
                 fontSize={["xs", "sm", "lg", "lg", "xl"]}
                 variant="outline"
                 _hover={{ bg: "red.100" }}
